@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\League;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,5 +51,17 @@ class User extends Authenticatable
         }
 
         return $roles;
+    }
+
+    // leagues for users who created
+    public function leagues()
+    {
+        return $this->hasMany(League::class, 'user_id');
+    }
+
+    // athlete leagues from pivot table
+    public function athleteLeagues()
+    {
+        return $this->belongsToMany(League::class, 'athlete_league', 'athlete_id');
     }
 }
