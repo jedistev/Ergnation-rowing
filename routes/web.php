@@ -36,6 +36,11 @@ Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('p
 
 
 Route::group(['middleware' => 'auth'], function(){
+
+    // League Routes
+
+
+
 	// logout route
 	Route::get('/logout', [LoginController::class,'logout']);
 	Route::get('/clear-cache', [HomeController::class,'clearCache']);
