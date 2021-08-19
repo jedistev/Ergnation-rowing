@@ -4,6 +4,7 @@ namespace App\Http\Controllers\League;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LeagueStoreRequest;
+use App\Models\League;
 use App\User;
 use Arr;
 use Illuminate\Http\Request;
@@ -12,7 +13,8 @@ class LeagueController extends Controller
 {
     public function index()
     {
-        return  view('league.index');
+        $leagues = League::withCount('athletes')->get();
+        return  view('league.index', compact('leagues'));
     }
 
     public function create()

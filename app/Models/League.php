@@ -17,6 +17,12 @@ class League extends Model
     public const TYPE_LIGHT_WEIGHT = 'Light Weight';
     public const TYPE_HEAVY_WEIGHT = 'Heavy Weight';
 
+    public function getAllowJoinForHumanAttribute($value)
+    {
+        return $value ? 'Yes' : 'No';
+    }
+
+
     // who created user
     public function user()
     {

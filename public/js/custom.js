@@ -265,6 +265,80 @@
                 });
             }
         });
+
+        // generic table
+        $('.datatable').DataTable({
+
+            order: [],
+            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            responsive: false,
+            language: {
+              processing: '<i class="ace-icon fa fa-spinner fa-spin orange bigger-500" style="font-size:60px;margin-top:50px;"></i>'
+            },
+            scroller: {
+                loadingIndicator: false
+            },
+            pagingType: "full_numbers",
+            buttons: [
+                {
+                    extend: 'copy',
+                    className: 'btn-sm btn-info',
+                    title: 'Users',
+                    header: false,
+                    footer: true,
+                    exportOptions: {
+                        // columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn-sm btn-success',
+                    title: 'Users',
+                    header: false,
+                    footer: true,
+                    exportOptions: {
+                        // columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn-sm btn-warning',
+                    title: 'Users',
+                    header: false,
+                    footer: true,
+                    exportOptions: {
+                        // columns: ':visible',
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn-sm btn-primary',
+                    title: 'Users',
+                    pageSize: 'A2',
+                    header: false,
+                    footer: true,
+                    exportOptions: {
+                        // columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'print',
+                    className: 'btn-sm btn-default',
+                    title: 'Users',
+                    // orientation:'landscape',
+                    pageSize: 'A2',
+                    header: true,
+                    footer: false,
+                    orientation: 'landscape',
+                    exportOptions: {
+                        // columns: ':visible',
+                        stripHtml: false
+                    }
+                }
+            ],
+        });
+
+
     });
     $('select').select2();
 })(jQuery);
