@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\League\LeagueController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -38,6 +39,9 @@ Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('p
 Route::group(['middleware' => 'auth'], function(){
 
     // League Routes
+    Route::group(['middleware' => 'role:Super Admin'], function (){
+        Route::resource('league', LeagueController::class);
+    });
 
 
 

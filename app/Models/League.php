@@ -11,6 +11,12 @@ class League extends Model
     use HasFactory;
     protected $guarded = [];
 
+    public const TYPE_OPEN = 'Open';
+    public const TYPE_PRIVATE = 'Private';
+
+    public const TYPE_LIGHT_WEIGHT = 'Light Weight';
+    public const TYPE_HEAVY_WEIGHT = 'Heavy Weight';
+
     // who created user
     public function user()
     {
@@ -20,7 +26,7 @@ class League extends Model
     // league athletes
     public function athletes()
     {
-        return $this->belongsToMany(User::class, 'athlete_league', 'league_id');
+        return $this->belongsToMany(User::class, 'athlete_league', 'league_id','athlete_id');
     }
 
 }

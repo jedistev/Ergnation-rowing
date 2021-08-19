@@ -41,7 +41,15 @@
                         @endcan
                     </div>
                 </div>
-
+                @if(auth()->user()->hasRole('Super Admin'))
+                    <div class="nav-item {{ request()->is('league*') ? 'active open' : '' }} has-sub">
+                    <a href="#"><i class="ik ik-user"></i><span>{{ __('Leagues Management')}}</span></a>
+                    <div class="submenu-content">
+                        <a href="{{ route('league.index') }}" class="menu-item {{ request()->is('league') ? 'active' : '' }}"> {{ __('Leagues')}}</a>
+                        <a href="{{ route('league.create') }}" class="menu-item {{ request()->is('league/create') ? 'active' : '' }}"> {{ __('Add League')}}</a>
+                    </div>
+                </div>
+                @endif
                 @can('manage_permission')
                 <div class="nav-lavel">{{ __('Documentation')}} </div>
                 <div class="nav-item {{ ($segment1 == 'rest-api') ? 'active' : '' }}">
