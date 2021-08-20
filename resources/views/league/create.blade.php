@@ -51,7 +51,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="name">{{ __('Name')}}<span class="text-red">*</span></label>
-                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="" placeholder="Enter league name" required>
+                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Enter league name" required>
                                         <div class="help-block with-errors"></div>
 
                                         @error('name')
@@ -67,7 +67,7 @@
                                         <label for="type">{{ __('Type')}}<span class="text-red">*</span></label>
                                         <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
                                             <option selected value="{{ \App\Models\League::TYPE_OPEN }}">{{ \App\Models\League::TYPE_OPEN }}</option>
-                                            <option value="{{ \App\Models\League::TYPE_PRIVATE }}">{{ \App\Models\League::TYPE_PRIVATE }}</option>
+                                            <option {{ old('type') == \App\Models\League::TYPE_PRIVATE ? 'selected' : '' }} value="{{ \App\Models\League::TYPE_PRIVATE }}">{{ \App\Models\League::TYPE_PRIVATE }}</option>
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('type')
@@ -81,7 +81,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="business">{{ __('Business')}}<span class="text-red">*</span></label>
-                                        <input id="business" type="text" class="form-control @error('business') is-invalid @enderror" name="business" value="" required>
+                                        <input id="business" type="text" class="form-control @error('business') is-invalid @enderror" name="business" value="{{ old('business') }}" required>
                                         <div class="help-block with-errors"></div>
                                         @error('business')
                                         <span class="invalid-feedback" role="alert">
@@ -96,7 +96,7 @@
                                         <label for="category">{{ __('Category')}}<span class="text-red">*</span></label>
                                         <select id="category" class="form-control @error('category') is-invalid @enderror" name="category" required>
                                             <option selected value="{{ \App\Models\League::TYPE_LIGHT_WEIGHT }}">{{ \App\Models\League::TYPE_LIGHT_WEIGHT }}</option>
-                                            <option value="{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}">{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}</option>
+                                            <option {{ old('category') == \App\Models\League::TYPE_HEAVY_WEIGHT ? 'selected' : '' }} value="{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}">{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}</option>
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('category')
@@ -112,8 +112,8 @@
                                         <label for="gender">{{ __('Gender')}}<span class="text-red">*</span></label>
                                         <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender" required>
                                             <option selected value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="other">Other</option>
+                                            <option {{ old('gender') == 'female' ? 'selected' : '' }} value="female">Female</option>
+                                            <option {{ old('gender') == 'other' ? 'selected' : '' }} value="other">Other</option>
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('gender')
@@ -127,7 +127,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="age">{{ __('Age')}}<span class="text-red">*</span></label>
-                                        <input id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" value="" placeholder="Age in years eg 22" required>
+                                        <input id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age') }}" placeholder="Age in years eg 22" required>
                                         <div class="help-block with-errors"></div>
                                         @error('age')
                                         <span class="invalid-feedback" role="alert">
@@ -163,7 +163,7 @@
                                         <label for="allow_join">{{ __('Allow Join?')}}<span class="text-red">*</span></label>
                                         <input type="hidden" name="allow_join" value="0">
                                         <br>
-                                        <input value="1" id="allow_join" class="form-control js-single @error('allow_join') is-invalid @enderror" name="allow_join" type="checkbox" autofocus />
+                                        <input value="1" id="allow_join" class="form-control js-single @error('allow_join') is-invalid @enderror" name="allow_join" type="checkbox" {{ old('allow_join') == 1 ? 'checked' : '' }} autofocus />
                                         <div class="help-block with-errors"></div>
                                         @error('allow_join')
                                         <span class="invalid-feedback" role="alert">
