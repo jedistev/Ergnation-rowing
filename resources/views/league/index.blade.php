@@ -61,17 +61,25 @@
                                 <tr>
                                     <td>{{ $league->name }}</td>
                                     <td>{{ $league->type }}</td>
-                                    <td>{{ $league->allow_join_for_human }}</td>
+                                    <td>{{ $league->allow_join ? 'Yes' : 'No' }}</td>
                                     <td>{{ $league->business }}</td>
                                     <td>{{ $league->category }}</td>
                                     <td>{{ $league->gender }}</td>
                                     <td>{{ $league->age }}</td>
-                                    <td>{{ $league->athletes_count }}</td>
-                                    <td>{{ $league->user->name }}</td>
+                                    @if($league->athletes_count > 0)
+                                        <td><a class="btn btn-link" href="{{ route('league.athletes', $league) }}">{{ $league->athletes_count }}</a></td>
+                                    @else
+                                        <td>0</td>
+                                    @endif
+                                        <td>{{ $league->user->name }}</td>
                                     <td>
                                         <div class="table-actions">
-                                            <a ><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
-                                            <a ><i class="ik ik-trash-2 f-16 text-red"></i></a>
+                                            <form action="{{ route('league.destroy', $league) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <a href="{{ route('league.edit', $league) }}"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
+                                                <button onclick="return confirm('Are you sure?')" class="btn btn-link" type="submit"><i class="ik ik-trash-2 f-16 text-red"></i></button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

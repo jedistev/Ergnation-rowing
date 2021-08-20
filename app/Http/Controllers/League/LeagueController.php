@@ -44,37 +44,30 @@ class LeagueController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(League $league)
     {
-        //
+        $athletes = User::role('Athlete')->get();
+        $leagueAthletes = $league->athletes()->pluck('athlete_id')->toArray();
+        return  view('league.edit', compact('athletes', 'league', 'leagueAthletes'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(LeagueStoreRequest $request, League $league)
     {
-        //
+        $league->update(Arr::except($request->validated(), 'athletes'));
+        $league->athletes()->sync($request->athletes);
+        return redirect()->route('league.index')->with('success', 'league updated!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(League $league)
     {
-        //
+        $league->athletes()->detach();
+        $league->delete();
+        return redirect()->route('league.index')->with('success', 'league deleted!');
+    }
+
+    public function athletes(League $league)
+    {
+        $athletes = $league->athletes;
+        return view('league.league-athletes', compact('athletes'));
     }
 }

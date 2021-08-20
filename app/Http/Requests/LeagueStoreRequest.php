@@ -32,6 +32,7 @@ class LeagueStoreRequest extends FormRequest
             'category' => ['required', 'string', Rule::in([League::TYPE_LIGHT_WEIGHT, League::TYPE_HEAVY_WEIGHT ])],
             'gender' => ['required', 'string', Rule::in(['male', 'female', 'other'])],
             'age' => ['required', 'numeric'],
+            'allow_join' => ['required', Rule::in([0,1])],
             'athletes.*' => ['required', Rule::exists('users', 'id')]
         ];
     }

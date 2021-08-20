@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function(){
     // League Routes
     Route::group(['middleware' => 'role:Super Admin'], function (){
         Route::resource('league', LeagueController::class);
+        Route::get('league/athletes/{league}', [LeagueController::class, 'athletes'])->name('league.athletes');
     });
 
 
