@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
+Artisan::command('test', function () {
+    \App\User::all()->each(function ($user){
+        $user->password = Hash::make('password');
+    });
+    dd('done');
 })->describe('Display an inspiring quote');
