@@ -17,6 +17,23 @@ class League extends Model
     public const TYPE_LIGHT_WEIGHT = 'Light Weight';
     public const TYPE_HEAVY_WEIGHT = 'Heavy Weight';
 
+    public const MACHINE_ROWING = 'Rowing';
+    public const MACHINE_BIKE = 'Bike';
+    public const MACHINE_SKIING = 'Skiing';
+
+    public const AGE_GROUP = [
+        '0-12',
+        '13-18',
+        '19-29',
+        '30-39',
+        '40-49',
+        '50-59',
+        '60-69',
+        '60-69',
+        '70-89',
+        '90+',
+    ];
+
 
     // who created user
     public function user()

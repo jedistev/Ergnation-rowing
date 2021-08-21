@@ -50,6 +50,20 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
+                                        <label for="logo">{{ __('Brand Logo')}}<span class="text-red">*</span></label>
+                                        <input id="logo" type="file" accept="image/*" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') }}" required>
+                                        <div class="help-block with-errors"></div>
+
+                                        @error('logo')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
                                         <label for="name">{{ __('Name')}}<span class="text-red">*</span></label>
                                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Enter league name" required>
                                         <div class="help-block with-errors"></div>
@@ -71,6 +85,23 @@
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('type')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="machine_type">{{ __('Machine Type')}}<span class="text-red">*</span></label>
+                                        <select id="machine_type" class="form-control @error('machine_type') is-invalid @enderror" name="machine_type" required>
+                                            <option selected value="{{ \App\Models\League::MACHINE_ROWING }}">{{ \App\Models\League::MACHINE_ROWING }}</option>
+                                            <option {{ old('machine_type') == \App\Models\League::MACHINE_BIKE ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_BIKE }}">{{ \App\Models\League::MACHINE_BIKE }}</option>
+                                            <option {{ old('machine_type') == \App\Models\League::MACHINE_SKIING ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_SKIING }}">{{ \App\Models\League::MACHINE_SKIING }}</option>
+                                        </select>
+                                        <div class="help-block with-errors"></div>
+                                        @error('machine_type')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -102,7 +133,7 @@
                                         @error('category')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
-                                            </span>
+                                        </span>
                                         @enderror
                                     </div>
                                 </div>
@@ -127,16 +158,60 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="age">{{ __('Age')}}<span class="text-red">*</span></label>
-                                        <input id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age') }}" placeholder="Age in years eg 22" required>
+                                        <select id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" required>
+                                            <option value="">Select Age Group</option>
+                                            @forelse(\App\Models\League::AGE_GROUP as $value)
+                                                <option value="{{ $value }}">{{ $value }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
                                         <div class="help-block with-errors"></div>
                                         @error('age')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="registration_start_date">{{ __('Registration Start Date')}}<span class="text-red">*</span></label>
+                                        <input id="registration_start_date" type="date" class="form-control @error('registration_start_date') is-invalid @enderror" name="registration_start_date" value="{{ old('registration_start_date') }}" placeholder="Enter registration start date" required>
+                                        <div class="help-block with-errors"></div>
+                                        @error('registration_start_date')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="registration_expiration_date">{{ __('Registration Expiration Date')}}<span class="text-red">*</span></label>
+                                        <input id="registration_expiration_date" type="date" class="form-control @error('registration_expiration_date') is-invalid @enderror" name="registration_expiration_date" value="{{ old('registration_expiration_date') }}" placeholder="Enter registration_ expiration date" required>
+                                        <div class="help-block with-errors"></div>
+                                        @error('registration_expiration_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="race_date">{{ __('Race Date')}}<span class="text-red">*</span></label>
+                                        <input id="race_date" type="date" class="form-control @error('race_date') is-invalid @enderror" name="race_date" value="{{ old('race_date') }}" placeholder="Enter race date" required>
+                                        <div class="help-block with-errors"></div>
+                                        @error('race_date')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                 </div>
-
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
