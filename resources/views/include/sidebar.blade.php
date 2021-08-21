@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 @if(auth()->user()->hasRole('Super Admin'))
-                    <div class="nav-item {{ request()->is('team*') ? 'active open' : '' }} has-sub">
+                    <div class="nav-item {{ request()->is('user*') ? 'active open' : '' }} has-sub">
                     <a href="#"><i class="ik ik-users"></i><span>{{ __('User')}}</span></a>
                     <div class="submenu-content">
                         <a href="{{url('users')}}" class="menu-item {{ request()->is('users') ? 'active' : '' }}">{{ __('Users')}}</a>
@@ -51,7 +51,7 @@
                 </div>
                 @endif
                 @if(auth()->user()->hasRole('Super Admin'))
-                    <div class="nav-item {{ request()->is('team*') ? 'active open' : '' }} has-sub">
+                    <div class="nav-item {{ request()->is('role*') ? 'active open' : '' }} has-sub">
                     <a href="#"><i class="ik ik-user-check"></i><span>{{ __('Role & Permission')}}</span></a>
                     <div class="submenu-content">
                         <a href="{{url('roles')}}"  class="menu-item {{ request()->is('roles') ? 'active' : '' }}">{{ __('Roles')}}</a>
