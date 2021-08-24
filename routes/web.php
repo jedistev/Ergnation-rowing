@@ -103,7 +103,8 @@ Route::group(['middleware' => 'auth'], function(){
 
     // Ergnation page
 	Route::get('/profile', function () { return view('pages.profile'); });
-	//Route::post('/profile', [UserController::class,'update']);
+	Route::get('/teamlist', [App\Http\Controllers\JointableController::class, 'index']);
+
 
 
 
