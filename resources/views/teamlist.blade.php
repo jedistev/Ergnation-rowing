@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Data Tables')
+@section('title', 'User in team list')
 @section('content')
     <!-- push external head elements to head -->
     @push('head')
