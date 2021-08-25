@@ -5,6 +5,7 @@ namespace App\Models;
 use App\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Storage;
 
 class League extends Model
 {
@@ -34,6 +35,10 @@ class League extends Model
         '90+',
     ];
 
+    public function getLogoUrlAttribute()
+    {
+        return Storage::disk('s3')->url($this->logo);
+    }
 
     // who created user
     public function user()

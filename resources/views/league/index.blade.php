@@ -44,23 +44,29 @@
                         <table id="league_table" class="table datatable">
                             <thead>
                             <tr>
+                                <th>{{ __('Logo')}}</th>
                                 <th>{{ __('Name')}}</th>
                                 <th>{{ __('Type')}}</th>
+                                <th>{{ __('Machine Type')}}</th>
                                 <th>{{ __('Allow Join')}}</th>
                                 <th>{{ __('Business')}}</th>
                                 <th>{{ __('Category')}}</th>
                                 <th>{{ __('Gender')}}</th>
-                                <th>{{ __('Age')}}</th>
+                                <th>{{ __('Age Group')}}</th>
                                 <th>{{ __('Athletes')}}</th>
-                                <th>{{ __('Created By')}}</th>
+                                <th>{{ __('Start Date')}}</th>
+                                <th>{{ __('End Date')}}</th>
+                                <th>{{ __('Race Date')}}</th>
                                 <th>{{ __('Action')}}</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($leagues as $league)
                                 <tr>
+                                    <td><img src="{{ $league->logo_url }}" width="50px"></td>
                                     <td>{{ $league->name }}</td>
                                     <td>{{ $league->type }}</td>
+                                    <td>{{ $league->machine_type }}</td>
                                     <td>{{ $league->allow_join ? 'Yes' : 'No' }}</td>
                                     <td>{{ $league->business }}</td>
                                     <td>{{ $league->category }}</td>
@@ -71,7 +77,10 @@
                                     @else
                                         <td>0</td>
                                     @endif
-                                        <td>{{ $league->user->name }}</td>
+                                    <td>{{ $league->registration_start_date }}</td>
+                                    <td>{{ $league->registration_expiration_date }}</td>
+                                    <td>{{ $league->race_date }}</td>
+{{--                                    <td>{{ $league->user->name }}</td>--}}
                                     <td>
                                         <div class="table-actions">
                                             <form action="{{ route('league.destroy', $league) }}" method="POST">

@@ -44,7 +44,7 @@
                         <h3>{{ __('Add League')}}</h3>
                     </div>
                     <div class="card-body">
-                        <form class="forms-sample" method="POST" action="{{ route('league.store') }}" >
+                        <form enctype="multipart/form-data" class="forms-sample" method="POST" action="{{ route('league.store') }}" >
                             @csrf
                             <div class="row">
 
@@ -161,7 +161,7 @@
                                         <select id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" required>
                                             <option value="">Select Age Group</option>
                                             @forelse(\App\Models\League::AGE_GROUP as $value)
-                                                <option value="{{ $value }}">{{ $value }}</option>
+                                                <option {{ old('age') == $value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
                                             @empty
                                             @endforelse
                                         </select>
