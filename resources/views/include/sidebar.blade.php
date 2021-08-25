@@ -83,7 +83,7 @@
                     <div class="nav-item {{ request()->is('league*') ? 'active open' : '' }} has-sub">
                     <a href="#"><i class="ik ik-align-justify"></i><span>{{ __('Leagues')}}</span></a>
                     <div class="submenu-content">
-                        <a href="{{ route('league.index') }}" class="menu-item {{ request()->is('league') ? 'active' : '' }}"> {{ __('Leagues')}}</a>
+                         <a href="{{ route('league.index') }}" class="menu-item {{ request()->is('league') ? 'active' : '' }}"> {{ __('Leagues')}}</a>
                         <a href="{{ route('athlete.my-leagues') }}" class="menu-item {{ request()->is('athlete/my-leagues') ? 'active' : '' }}"> {{ __('My Leagues')}}</a>
                     </div>
                 </div>

@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::group(['middleware' => 'role:Super Admin|Athlete'], function (){
         Route::resource('league', LeagueController::class);
         Route::get('league/athletes/{league}', [LeagueController::class, 'athletes'])->name('league.athletes');
+		Route::get('/teamlist', [App\Http\Controllers\JointableController::class, 'index']);
     });
 
     Route::group(['prefix' => 'athlete', 'middleware' => 'role:Athlete', 'as' => 'athlete.'], function (){
@@ -111,7 +112,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     // Ergnation page
 	Route::get('/profile', function () { return view('pages.profile'); });
-	Route::get('/teamlist', [App\Http\Controllers\JointableController::class, 'index']);
+
 
 
 
