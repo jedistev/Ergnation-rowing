@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionController;
+use \App\Http\Controllers\Athlete;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,10 +40,17 @@ Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('p
 Route::group(['middleware' => 'auth'], function(){
 
     // League Routes
-    Route::group(['middleware' => 'role:Super Admin'], function (){
+    Route::group(['middleware' => 'role:Super Admin|Athlete'], function (){
         Route::resource('league', LeagueController::class);
         Route::get('league/athletes/{league}', [LeagueController::class, 'athletes'])->name('league.athletes');
 		Route::get('/teamlist', [App\Http\Controllers\JointableController::class, 'index']);
+    });
+
+    Route::group(['prefix' => 'athlete', 'middleware' => 'role:Athlete', 'as' => 'athlete.'], function (){
+        Route::get('/my-leagues', [Athlete\LeagueController::class, 'myLeagues'])->name('my-leagues');
+        Route::get('/results/upload/{league}', [Athlete\ResultController::class, 'create'])->name('results.create');
+        Route::post('/results/upload/{league}', [Athlete\ResultController::class, 'store'])->name('results.store');
+        Route::get('/results/{league}', [Athlete\ResultController::class, 'show'])->name('results');
     });
 
 

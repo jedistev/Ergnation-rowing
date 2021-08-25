@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Leagues')
+@section('title', 'My Leagues')
 @section('content')
     <!-- push external head elements to head -->
     @push('head')
@@ -48,16 +48,12 @@
                                 <th>{{ __('Name')}}</th>
                                 <th>{{ __('Type')}}</th>
                                 <th>{{ __('Machine Type')}}</th>
-                                <th>{{ __('Allow Join')}}</th>
                                 <th>{{ __('Business')}}</th>
                                 <th>{{ __('Category')}}</th>
-                                <th>{{ __('Gender')}}</th>
-                                <th>{{ __('Age Group')}}</th>
-                                <th>{{ __('Athletes')}}</th>
                                 <th>{{ __('Start Date')}}</th>
                                 <th>{{ __('End Date')}}</th>
                                 <th>{{ __('Race Date')}}</th>
-                                <th>{{ __('Action')}}</th>
+                                <th>{{ __('Actions')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -67,28 +63,15 @@
                                     <td>{{ $league->name }}</td>
                                     <td>{{ $league->type }}</td>
                                     <td>{{ $league->machine_type }}</td>
-                                    <td>{{ $league->allow_join ? 'Yes' : 'No' }}</td>
                                     <td>{{ $league->business }}</td>
                                     <td>{{ $league->category }}</td>
-                                    <td>{{ $league->gender }}</td>
-                                    <td>{{ $league->age }}</td>
-                                    @if($league->athletes_count > 0)
-                                        <td><a class="btn btn-link" href="{{ route('league.athletes', $league) }}">{{ $league->athletes_count }}</a></td>
-                                    @else
-                                        <td>0</td>
-                                    @endif
                                     <td>{{ $league->registration_start_date }}</td>
                                     <td>{{ $league->registration_expiration_date }}</td>
                                     <td>{{ $league->race_date }}</td>
-{{--                                    <td>{{ $league->user->name }}</td>--}}
                                     <td>
                                         <div class="table-actions">
-                                            <form action="{{ route('league.destroy', $league) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a href="{{ route('league.edit', $league) }}"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
-                                                <button onclick="return confirm('Are you sure?')" class="btn btn-link" type="submit"><i class="ik ik-trash-2 f-16 text-red"></i></button>
-                                            </form>
+                                            <a href=""><i data-toggle="tooltip" data-title="View Results" class="ik ik-eye"></i></a>
+                                            <a href="{{ route('athlete.results.create', $league) }}" ><i data-toggle="tooltip" data-title="Upload Results" class="ik ik-upload"></i></a>
                                         </div>
                                     </td>
                                 </tr>

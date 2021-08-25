@@ -62,6 +62,6 @@ class User extends Authenticatable
     // athlete leagues from pivot table
     public function athleteLeagues()
     {
-        return $this->belongsToMany(League::class, 'athlete_league', 'league_id');
+        return $this->belongsToMany(League::class, 'athlete_league', 'athlete_id');
     }
 }

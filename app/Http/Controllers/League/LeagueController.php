@@ -4,10 +4,12 @@ namespace App\Http\Controllers\League;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LeagueStoreRequest;
+use App\Http\Requests\LeagueUpdateRequest;
 use App\Models\League;
 use App\User;
 use Arr;
 use Illuminate\Http\Request;
+use Storage;
 
 class LeagueController extends Controller
 {
@@ -25,7 +27,11 @@ class LeagueController extends Controller
 
     public function store(LeagueStoreRequest $request)
     {
-        $league = auth()->user()->leagues()->create(Arr::except($request->validated(), 'athletes'));
+        $path = $request->file('logo')->store('logos', 's3');
+
+        $league = auth()->user()->leagues()->make(Arr::except(  $request->validated(), ['athletes', 'logo']));
+        $league->logo = $path;
+        $league->save();
 
         // store athletes
         $league->athletes()->attach($request->athletes);
@@ -51,10 +57,21 @@ class LeagueController extends Controller
         return  view('league.edit', compact('athletes', 'league', 'leagueAthletes'));
     }
 
-    public function update(LeagueStoreRequest $request, League $league)
+    public function update(LeagueUpdateRequest $request, League $league)
     {
-        $league->update(Arr::except($request->validated(), 'athletes'));
+        $validate = Arr::except(  $request->validated(), ['athletes', 'logo']);
+        if ($request->has('logo')){
+            // delete old file
+            Storage::disk('s3')->delete($league->logo);
+
+            // upload new file
+            $path = $request->file('logo')->store('logos', 's3');
+            $validate['logo'] = $path;
+        }
+
+        $league->update($validate);
         $league->athletes()->sync($request->athletes);
+
         return redirect()->route('league.index')->with('success', 'league updated!');
     }
 

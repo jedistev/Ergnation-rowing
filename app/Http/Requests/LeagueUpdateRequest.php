@@ -6,7 +6,7 @@ use App\Models\League;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class LeagueStoreRequest extends FormRequest
+class LeagueUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class LeagueStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'logo' => ['required', 'image', 'mimes:jpg,png,jpeg', 'max:20000'],
+            'logo' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:20000'],
             'type' => ['required', 'string', Rule::in([League::TYPE_OPEN, League::TYPE_PRIVATE ])],
             'machine_type' => ['required', 'string', Rule::in([League::MACHINE_SKIING, League::MACHINE_BIKE, League::MACHINE_ROWING ])],
             'business' => ['required', 'string'],
