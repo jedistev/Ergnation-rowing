@@ -52,4 +52,10 @@ class League extends Model
         return $this->belongsToMany(User::class, 'athlete_league', 'league_id','athlete_id');
     }
 
+    // results
+    public function results()
+    {
+        return $this->hasMany(AthleteResults::class, 'league_id');
+    }
+
 }
