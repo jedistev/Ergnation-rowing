@@ -18,9 +18,10 @@ class League extends Model
     public const TYPE_LIGHT_WEIGHT = 'Light Weight';
     public const TYPE_HEAVY_WEIGHT = 'Heavy Weight';
 
-    public const MACHINE_ROWING = 'Rowing';
-    public const MACHINE_BIKE = 'Bike';
-    public const MACHINE_SKIING = 'Skiing';
+    public const MACHINE_ROWING = 'Indoor Rowing';
+    public const MACHINE_BIKE = 'BikeErg';
+    public const MACHINE_SKIING = 'SkiErg';
+    public const MACHINE_ERGATHLON = 'Ergathlon';
 
     public const AGE_GROUP = [
         '0-12',

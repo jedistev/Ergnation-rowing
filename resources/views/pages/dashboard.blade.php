@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="{{ asset('plugins/chartist/dist/chartist.min.css') }}">
 @endpush
 
+
 <div class="container-fluid">
     <div class="page-header">
         <div class="row align-items-end">

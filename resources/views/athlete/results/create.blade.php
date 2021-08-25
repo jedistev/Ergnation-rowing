@@ -67,6 +67,7 @@
                                             <option selected value="{{ \App\Models\League::MACHINE_ROWING }}">{{ \App\Models\League::MACHINE_ROWING }}</option>
                                             <option {{ old('type') == \App\Models\League::MACHINE_BIKE ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_BIKE }}">{{ \App\Models\League::MACHINE_BIKE }}</option>
                                             <option {{ old('type') == \App\Models\League::MACHINE_SKIING ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_SKIING }}">{{ \App\Models\League::MACHINE_SKIING }}</option>
+                                            <option {{ old('type') == \App\Models\League::MACHINE_ERGATHLON ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_ERGATHLON }}">{{ \App\Models\League::MACHINE_ERGATHLON }}</option>
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('type')

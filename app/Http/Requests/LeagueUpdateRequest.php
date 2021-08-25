@@ -29,7 +29,7 @@ class LeagueUpdateRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'logo' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:20000'],
             'type' => ['required', 'string', Rule::in([League::TYPE_OPEN, League::TYPE_PRIVATE ])],
-            'machine_type' => ['required', 'string', Rule::in([League::MACHINE_SKIING, League::MACHINE_BIKE, League::MACHINE_ROWING ])],
+            'machine_type' => ['required', 'string', Rule::in([League::MACHINE_ERGATHLON, League::MACHINE_SKIING, League::MACHINE_BIKE, League::MACHINE_ROWING ])],
             'business' => ['required', 'string'],
             'category' => ['required', 'string', Rule::in ([League::TYPE_LIGHT_WEIGHT, League::TYPE_HEAVY_WEIGHT ])],
             'gender' => ['required', 'string', Rule::in(['male', 'female', 'other'])],
