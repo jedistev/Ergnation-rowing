@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 @if(auth()->user()->hasRole('Super Admin'))
-                    <div class="nav-item {{ request()->is('team*') ? 'active open' : '' }} has-sub">
+                    <div class="nav-item {{ request()->is('user*') ? 'active open' : '' }} has-sub">
                     <a href="#"><i class="ik ik-users"></i><span>{{ __('User')}}</span></a>
                     <div class="submenu-content">
                         <a href="{{url('users')}}" class="menu-item {{ request()->is('users') ? 'active' : '' }}">{{ __('Users')}}</a>
@@ -51,7 +51,7 @@
                 </div>
                 @endif
                 @if(auth()->user()->hasRole('Super Admin'))
-                    <div class="nav-item {{ request()->is('team*') ? 'active open' : '' }} has-sub">
+                    <div class="nav-item {{ request()->is('role*') ? 'active open' : '' }} has-sub">
                     <a href="#"><i class="ik ik-user-check"></i><span>{{ __('Role & Permission')}}</span></a>
                     <div class="submenu-content">
                         <a href="{{url('roles')}}"  class="menu-item {{ request()->is('roles') ? 'active' : '' }}">{{ __('Roles')}}</a>
@@ -65,15 +65,25 @@
                     <div class="submenu-content">
                         <a href="{{ route('teams.index')}}" class="menu-item {{ request()->is('teams') ? 'active' : '' }}">{{ __('Teams')}}</a>
                         <a href="{{ route('teams.create')}}" class="menu-item {{ request()->is('teams/create') ? 'active' : '' }}">{{ __('Add Team')}}</a>
+                        <a href="{{url('teamlist')}}" class="menu-item {{ ($segment1 == 'teamlist') ? 'active' : '' }}"> {{ __(' User in Team')}}</a>
                     </div>
                 </div>
                 @endif
-                @if(auth()->user()->hasRole('Super Admin'))
+                @if(auth()->user()->hasRole(['Super Admin','Business Owner']))
                     <div class="nav-item {{ request()->is('league*') ? 'active open' : '' }} has-sub">
                     <a href="#"><i class="ik ik-align-justify"></i><span>{{ __('Leagues Management')}}</span></a>
                     <div class="submenu-content">
                         <a href="{{ route('league.index') }}" class="menu-item {{ request()->is('league') ? 'active' : '' }}"> {{ __('Leagues')}}</a>
                         <a href="{{ route('league.create') }}" class="menu-item {{ request()->is('league/create') ? 'active' : '' }}"> {{ __('Add League')}}</a>
+                    </div>
+                </div>
+                @endif
+
+                @if(auth()->user()->hasRole(['Athlete']))
+                    <div class="nav-item {{ request()->is('league*') ? 'active open' : '' }} has-sub">
+                    <a href="#"><i class="ik ik-align-justify"></i><span>{{ __('Leagues')}}</span></a>
+                    <div class="submenu-content">
+                        <a href="{{ route('league.index') }}" class="menu-item {{ request()->is('league') ? 'active' : '' }}"> {{ __('Leagues')}}</a>
                     </div>
                 </div>
                 @endif
