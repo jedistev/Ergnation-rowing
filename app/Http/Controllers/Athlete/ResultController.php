@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Athlete;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AthleteResultStoreRequest;
+use App\Models\AthleteResults;
 use App\Models\League;
 use Arr;
 use Illuminate\Http\Request;
@@ -29,6 +30,9 @@ class ResultController extends Controller
 
     public function show(League $league)
     {
-        dd($league);
+        $result = AthleteResults::where('league_id', $league->id)
+            ->where('athlete_id', auth()->id())->first();
+
+        return view('athlete.results.show', compact('result'));
     }
 }
