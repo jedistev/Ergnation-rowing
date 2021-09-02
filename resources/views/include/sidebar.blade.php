@@ -69,6 +69,24 @@
                         </div>
                     </div>
                 @endif
+                @if(auth()->user()->hasRole('Business Owner'))
+                    <div class="nav-item {{ request()->is('team*') ? 'active open' : '' }} has-sub">
+                        <a href="#"><i class="ik ik-list"></i><span>{{ __('Team')}}</span></a>
+                        <div class="submenu-content">
+                            <a href="{{ route('teams.index')}}" class="menu-item {{ request()->is('teams') ? 'active' : '' }}">{{ __('Teams')}}</a>
+                            <a href="{{ route('teams.create')}}" class="menu-item {{ request()->is('teams/create') ? 'active' : '' }}">{{ __('Add Team')}}</a>
+                        </div>
+                    </div>
+                @endif
+                @if(auth()->user()->hasRole('Athlete'))
+                    <div class="nav-item {{ request()->is('team*') ? 'active open' : '' }} has-sub">
+                        <a href="#"><i class="ik ik-list"></i><span>{{ __('Team')}}</span></a>
+                        <div class="submenu-content">
+                            <a href="{{ route('teams.index')}}" class="menu-item {{ request()->is('teams') ? 'active' : '' }}">{{ __('Teams')}}</a>
+
+                        </div>
+                    </div>
+                @endif
                 @if(auth()->user()->hasRole(['Super Admin','Business Owner']))
                     <div class="nav-item {{ request()->is('league*') ? 'active open' : '' }} has-sub">
                         <a href="#"><i class="ik ik-align-justify"></i><span>{{ __('Leagues Management')}}</span></a>

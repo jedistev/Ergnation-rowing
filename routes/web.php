@@ -46,6 +46,12 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('/teamlist', [App\Http\Controllers\JointableController::class, 'index']);
     });
 
+	// League Routes for business owner
+	Route::group(['middleware' => 'role:Business Owner|Athlete'], function (){
+		Route::resource('league', LeagueController::class);
+		Route::get('league/athletes/{league}', [LeagueController::class, 'athletes'])->name('league.athletes');
+	});
+
     Route::group(['prefix' => 'athlete', 'middleware' => 'role:Athlete', 'as' => 'athlete.'], function (){
         Route::get('/my-leagues', [Athlete\LeagueController::class, 'myLeagues'])->name('my-leagues');
         Route::get('/results/upload/{league}', [Athlete\ResultController::class, 'create'])->name('results.create');
