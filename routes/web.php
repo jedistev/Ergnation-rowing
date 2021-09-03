@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::resource('league', LeagueController::class);
         Route::get('league/athletes/{league}', [LeagueController::class, 'athletes'])->name('league.athletes');
 		Route::get('/teamlist', [App\Http\Controllers\JointableController::class, 'index']);
+		Route::get('/teamlistfliter', [App\Http\Controllers\TeamUserListController::class, 'index']);
     });
 
 	// League Routes for business owner
