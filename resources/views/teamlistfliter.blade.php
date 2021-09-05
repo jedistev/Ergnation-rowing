@@ -38,11 +38,19 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header d-block">
-                        <h3>Athletic</h3>
+                        <h3>{{ __('Team')}}</h3>
+                        <div class="Team-filter">
+                        <select id="TeamFilter" class="form-control">
+                                <option value="">Show All</option>
+                                @foreach($teamlistfliter as $row)
+                                    <option>{{ $row->team }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="dt-responsive">
-                            <table id="simpletable"
+                            <table id="filterTable"
                                    class="table table-striped table-bordered nowrap">
                                 <thead>
                                     <tr>
@@ -82,5 +90,34 @@
      @push('script')
     <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('js/datatables.js') }}"></script>
+    <script>
+    $("document").ready(function () {
+      $("#filterTable").dataTable({
+        "searching": true
+      });
+      var table = $('#filterTable').DataTable();
+      $("#filterTable_filter.dataTables_filter").append($("#TeamFilter"));
+      var TeamIndex = 0;
+      $("#filterTable th").each(function (i) {
+        if ($($(this)).html() == "Team") {
+          TeamIndex = i; return false;
+        }
+      });
+      $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+          var selectedItem = $('#TeamFilter').val()
+          var Team = data[TeamIndex];
+          if (selectedItem === "" || Team.includes(selectedItem)) {
+            return true;
+          }
+          return false;
+        }
+      );
+      $("#TeamFilter").change(function (e) {
+        table.draw();
+      });
+      table.draw();
+    });
+  </script>
     @endpush
 @endsection

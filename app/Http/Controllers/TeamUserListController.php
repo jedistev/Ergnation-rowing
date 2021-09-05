@@ -12,18 +12,6 @@ class TeamUserListController extends Controller
     {
     	$teamlistfliter = User::join('teams', 'teams.id', '=', 'users.current_team_id')
               		->get(['users.name as username', 'teams.name as team', 'users.firstname as first_name', 'users.surname as surname']);
-
-       	/*Above code will produce following query
-
-        SELECT
-        users.name as Username,
-        users.firstname as first_name,
-        users.surname as surname,
-        teams.name as Team
-        FROM ergnation.users
-        INNER JOIN ergnation.teams ON users.current_team_id=teams.id;
-        */
-
         return view('teamlistfliter', compact('teamlistfliter'));
     }
 
