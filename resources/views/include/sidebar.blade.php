@@ -65,7 +65,8 @@
                         <div class="submenu-content">
                             <a href="{{ route('teams.index')}}" class="menu-item {{ request()->is('teams') ? 'active' : '' }}">{{ __('Teams')}}</a>
                             <a href="{{ route('teams.create')}}" class="menu-item {{ request()->is('teams/create') ? 'active' : '' }}">{{ __('Add Team')}}</a>
-                            <a href="{{url('teamlist')}}" class="menu-item {{ ($segment1 == 'teamlist') ? 'active' : '' }}"> {{ __(' User in Team')}}</a>
+                            <a href="{{url('teamlist')}}" class="menu-item {{ ($segment1 == 'teamlist') ? 'active' : '' }}"> {{ __('All User with Team')}}</a>
+                            <a href="{{url('teamlistfliter')}}" class="menu-item {{ ($segment1 == 'teamlistfliter') ? 'active' : '' }}"> {{ __('List of Team with Athetlic')}}</a>
                         </div>
                     </div>
                 @endif
