@@ -60,7 +60,7 @@ Route::group(['middleware' => 'auth'], function(){
     });
 
 	// League Routes for business owner
-	Route::group(['middleware' => 'role:Business Owner|Athlete'], function (){
+	Route::group(['middleware' => 'role:Super Admin|Business Owner|Athlete'], function (){
 		Route::resource('league', LeagueController::class);
 		Route::get('league/athletes/{league}', [LeagueController::class, 'athletes'])->name('league.athletes');
 	});
