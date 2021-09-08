@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/results/upload/{league}', [Athlete\ResultController::class, 'create'])->name('results.create');
         Route::post('/results/upload/{league}', [Athlete\ResultController::class, 'store'])->name('results.store');
         Route::get('/results/{league}', [Athlete\ResultController::class, 'show'])->name('results');
+        Route::get('/leave/{league}', [Athlete\LeagueController::class, 'leave'])->name('league.leave');
     });
 
 
