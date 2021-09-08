@@ -20,11 +20,12 @@
                 <div class="nav-item {{ ($segment1 == 'dashboard') ? 'active' : '' }}">
                     <a href="{{route('dashboard')}}"><i class="ik ik-bar-chart-2"></i><span>{{ __('Dashboard')}}</span></a>
                 </div>
-                <div class="nav-item {{ ( $segment1 == 'profile') ? 'active open' : '' }} has-sub">
-                    <a href="#"><i class="ik ik-info"></i><span>{{ __('Profile')}}</span></a>
-                    <div class="submenu-content">
-                        <a href="{{url('profile')}}" class="menu-item {{ ($segment1 == 'profile') ? 'active' : '' }}"> {{ __('Profile')}}</a>
-                    <!-- only those have manage_user permission will get access
+
+                    <div class="nav-item {{ request()->is('profile*') ? 'active open' : '' }} has-sub">
+                        <a href="#"><i class="ik ik-info"></i><span>{{ __('Profile')}}</span></a>
+                        <div class="submenu-content">
+                            <a href="{{ route('common.profile.index') }}" class="menu-item {{ ($segment1 == 'profile') ? 'active' : '' }}"> {{ __('Profile')}}</a>
+                        <!-- only those have manage_user permission will get access
                         @can('manage_user')
                         <a href="{{url('users')}}" class="menu-item {{ ($segment1 == 'users') ? 'active' : '' }}">{{ __('Users')}}</a>
                         <a href="{{url('user/create')}}" class="menu-item {{ ($segment1 == 'user' && $segment2 == 'create') ? 'active' : '' }}">{{ __('Add User')}}</a>
@@ -34,7 +35,7 @@
                         <a href="{{url('roles')}}" class="menu-item {{ ($segment1 == 'roles') ? 'active' : '' }}">{{ __('Roles')}}</a>
                         @endcan
                         only those have manage_permission permission will get access
-@can('manage_permission')
+                        @can('manage_permission')
                         <a href="{{url('permission')}}" class="menu-item {{ ($segment1 == 'permission') ? 'active' : '' }}">{{ __('Permission')}}</a>
                         <a href="{{url('teams')}}" class="menu-item {{ ($segment1 == 'teams') ? 'active' : '' }}">{{ __('Teams')}}</a>
                         <a href="{{url('teams/create')}}" class="menu-item {{ ($segment1 == 'newteam' && $segment2 == 'create') ? 'active' : '' }}">{{ __('Add Team')}}</a>

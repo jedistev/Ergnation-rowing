@@ -20,7 +20,9 @@ class ResultController extends Controller
     {
         $path = $request->file('proof_photo')->store('proof_photo', 's3');
 
-        $result = $league->results()->make(Arr::except($request->validated(), ['proof_photo']));
+        $result = $league->results()->make(Arr::except(
+            $request->validated() + ['type' => $league->machine_type, 'weight_class' => $league->category],
+            ['proof_photo']));
         $result->proof_photo = $path;
         $result->athlete_id = auth()->id();
         $result->save();

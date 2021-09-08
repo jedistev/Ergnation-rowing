@@ -30,7 +30,7 @@ class LeagueStoreRequest extends FormRequest
             'logo' => ['required', 'image', 'mimes:jpg,png,jpeg', 'max:20000'],
             'type' => ['required', 'string', Rule::in([League::TYPE_OPEN, League::TYPE_PRIVATE ])],
             'machine_type' => ['required', 'string', Rule::in([League::MACHINE_ERGATHLON, League::MACHINE_SKIING, League::MACHINE_BIKE, League::MACHINE_ROWING ])],
-            'business' => ['required', 'string'],
+            'business' => ['required', 'string'], // @todo change to description in DB
             'category' => ['required', 'string', Rule::in ([League::TYPE_LIGHT_WEIGHT, League::TYPE_HEAVY_WEIGHT ])],
             'gender' => ['required', 'string', Rule::in(['male', 'female', 'other'])],
             'age' => ['required', Rule::in(League::AGE_GROUP)],

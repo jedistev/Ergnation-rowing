@@ -15,9 +15,7 @@ class LeagueController extends Controller
 
     public function leave(League $league)
     {
-        $league->whereHas('athletes', function ($q){
-            $q->where('athlete_id', auth()->id());
-        })->delete();
+        $league->athletes()->detach(auth()->id());
 
         session()->flash('success', 'You left league successfully.');
         return redirect()->back();

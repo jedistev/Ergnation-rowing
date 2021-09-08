@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Leagues Results')
+@section('title', 'League Athletes')
 @section('content')
     <!-- push external head elements to head -->
     @push('head')
@@ -14,7 +14,8 @@
                     <div class="page-header-title">
                         <i class="ik ik-users bg-blue"></i>
                         <div class="d-inline">
-                            <h5>{{ __('Leagues Results')}}</h5>
+                            <h5>{{ __('League Athletes')}}</h5>
+                            <span>{{ __('List of League Athletes')}}</span>
                         </div>
                     </div>
                 </div>
@@ -25,7 +26,7 @@
                                 <a href="{{route('dashboard')}}"><i class="ik ik-home"></i></a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#">{{ __('Leagues Results')}}</a>
+                                <a href="#">{{ __('League Athletes')}}</a>
                             </li>
                         </ol>
                     </nav>
@@ -38,35 +39,29 @@
         <!-- end message area-->
             <div class="col-md-12">
                 <div class="card p-3">
-                    <div class="card-header"><h3>{{ __('Leagues Results')}}</h3></div>
+                    <div class="card-header"><h3>{{ __('League Athletes')}}</h3></div>
                     <div class="card-body">
                         <table id="league_table" class="table datatable">
                             <thead>
                             <tr>
-                                <th>{{ __('Proof')}}</th>
-                                <th>{{ __('League Name')}}</th>
-                                <th>{{ __('Type')}}</th>
-                                <th>{{ __('Weight Class')}}</th>
-                                <th>{{ __('Total Time')}}</th>
-                                <th>{{ __('Distance')}}</th>
-                                <th>{{ __('Workout Date')}}</th>
-                                <th>{{ __('Comments')}}</th>
+                                <th>{{ __('Name')}}</th>
+                                <th>{{ __('First Name')}}</th>
+                                <th>{{ __('Surname')}}</th>
+                                <th>{{ __('Email')}}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($results as $result)
+                            @forelse($athletes as $athlete)
                                 <tr>
-                                    <td><a href="{{ $result->proof_url }}"><img width="50px"
-                                                                                src="{{ $result->proof_url }}"></a></td>
-                                    <td>{{ $result->league->name }}</td>
-                                    <td>{{ $result->type }}</td>
-                                    <td>{{ $result->weight_class }}</td>
-                                    <td>{{ $result->hours.'H' }} {{ $result->minutes.'M' }} {{ $result->seconds.'S' }} {{ $result->tenths.'T' }}</td>
-                                    <td>{{ $result->distance }} M</td>
-                                    <td>{{ $result->workout_date }}</td>
-                                    <td>{{ $result->comments }}</td>
+                                    <td>{{ $athlete->name }}</td>
+                                    <td>{{ $athlete->firstname }}</td>
+                                    <td>{{ $athlete->surname }}</td>
+                                    <td>{{ $athlete->email }}</td>
                                 </tr>
                             @empty
+                                <tr>
+                                    <td colspan="9">No Leagues Found</td>
+                                </tr>
                             @endforelse
                             </tbody>
                         </table>

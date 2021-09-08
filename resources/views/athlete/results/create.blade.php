@@ -63,12 +63,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="type">{{ __('Type')}}<span class="text-red">*</span></label>
-                                        <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
-                                            <option selected value="{{ \App\Models\League::MACHINE_ROWING }}">{{ \App\Models\League::MACHINE_ROWING }}</option>
-                                            <option {{ old('type') == \App\Models\League::MACHINE_BIKE ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_BIKE }}">{{ \App\Models\League::MACHINE_BIKE }}</option>
-                                            <option {{ old('type') == \App\Models\League::MACHINE_SKIING ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_SKIING }}">{{ \App\Models\League::MACHINE_SKIING }}</option>
-                                            <option {{ old('type') == \App\Models\League::MACHINE_ERGATHLON ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_ERGATHLON }}">{{ \App\Models\League::MACHINE_ERGATHLON }}</option>
-                                        </select>
+                                        <input disabled id="type" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type', $league->machine_type) }}" placeholder="Distance in meters"  required>
                                         <div class="help-block with-errors"></div>
                                         @error('type')
                                         <span class="invalid-feedback" role="alert">
@@ -81,7 +76,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="workout_date">{{ __('Workout Date')}}<span class="text-red">*</span></label>
-                                        <input id="workout_date" type="date" class="form-control @error('workout_date') is-invalid @enderror" name="workout_date" value="{{ old('workout_date') }}"  required>
+                                        <input min="{{ $league->registration_start_date }}" max="{{ $league->registration_expiration_date }}" id="workout_date" type="date" class="form-control @error('workout_date') is-invalid @enderror" name="workout_date" value="{{ old('workout_date') }}"  required>
                                         <div class="help-block with-errors"></div>
                                         @error('workout_date')
                                         <span class="invalid-feedback" role="alert">
@@ -159,10 +154,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="weight_class">{{ __('Weight Class')}}<span class="text-red">*</span></label>
-                                        <select id="weight_class" class="form-control @error('weight_class') is-invalid @enderror" name="weight_class" required>
-                                            <option selected value="{{ \App\Models\League::TYPE_LIGHT_WEIGHT }}">{{ \App\Models\League::TYPE_LIGHT_WEIGHT }}</option>
-                                            <option {{ old('category') == \App\Models\League::TYPE_HEAVY_WEIGHT ? 'selected' : '' }} value="{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}">{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}</option>
-                                        </select>
+                                        <input disabled type="text" id="weight_class" class="form-control @error('weight_class') is-invalid @enderror" name="weight_class" value="{{ old('weight_class', $league->category) }}">
                                         <div class="help-block with-errors"></div>
                                         @error('weight_class')
                                         <span class="invalid-feedback" role="alert">

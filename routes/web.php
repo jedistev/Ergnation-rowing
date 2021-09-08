@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Common\ProfileController;
 use App\Http\Controllers\League\LeagueController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -38,6 +39,17 @@ Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('p
 
 
 Route::group(['middleware' => 'auth'], function(){
+
+    // profile routes
+    // common for all users
+    Route::group(['as' => 'common.'], function (){
+
+        Route::group(['prefix' => 'profile', 'as' => 'profile.'], function (){
+            Route::view('/','common.profile')->name('index');
+            Route::post('/',[ProfileController::class, 'update'])->name('update');
+        });
+
+    });
 
     // League Routes
     Route::group(['middleware' => 'role:Super Admin|Athlete'], function (){
@@ -117,10 +129,6 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/table-datatable-edit', function () {
 		return view('pages.datatable-editable');
 	});
-
-    // Ergnation page
-	Route::get('/profile', function () { return view('pages.profile'); });
-
 
 
 
