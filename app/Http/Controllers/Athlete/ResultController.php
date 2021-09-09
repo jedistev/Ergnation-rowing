@@ -32,9 +32,9 @@ class ResultController extends Controller
 
     public function show(League $league)
     {
-        $result = AthleteResults::where('league_id', $league->id)
-            ->where('athlete_id', auth()->id())->first();
+        $results = AthleteResults::where('league_id', $league->id)
+            ->where('athlete_id', auth()->id())->get();
 
-        return view('athlete.results.show', compact('result'));
+        return view('athlete.results.show', compact('results'));
     }
 }

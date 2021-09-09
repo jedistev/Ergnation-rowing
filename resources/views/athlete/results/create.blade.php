@@ -63,7 +63,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="type">{{ __('Type')}}<span class="text-red">*</span></label>
-                                        <input disabled id="type" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type', $league->machine_type) }}" placeholder="Distance in meters"  required>
+                                        <input readonly id="type" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type', $league->machine_type) }}" placeholder="Distance in meters"  required>
                                         <div class="help-block with-errors"></div>
                                         @error('type')
                                         <span class="invalid-feedback" role="alert">
@@ -76,7 +76,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="workout_date">{{ __('Workout Date')}}<span class="text-red">*</span></label>
-                                        <input min="{{ $league->registration_start_date }}" max="{{ $league->registration_expiration_date }}" id="workout_date" type="date" class="form-control @error('workout_date') is-invalid @enderror" name="workout_date" value="{{ old('workout_date') }}"  required>
+                                        <input readonly id="workout_date" type="date" class="form-control @error('workout_date') is-invalid @enderror" name="workout_date" value="{{ $league->race_date }}"  required>
                                         <div class="help-block with-errors"></div>
                                         @error('workout_date')
                                         <span class="invalid-feedback" role="alert">
@@ -154,7 +154,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="weight_class">{{ __('Weight Class')}}<span class="text-red">*</span></label>
-                                        <input disabled type="text" id="weight_class" class="form-control @error('weight_class') is-invalid @enderror" name="weight_class" value="{{ old('weight_class', $league->category) }}">
+                                        <input readonly type="text" id="weight_class" class="form-control @error('weight_class') is-invalid @enderror" name="weight_class" value="{{ old('weight_class', $league->category) }}">
                                         <div class="help-block with-errors"></div>
                                         @error('weight_class')
                                         <span class="invalid-feedback" role="alert">
