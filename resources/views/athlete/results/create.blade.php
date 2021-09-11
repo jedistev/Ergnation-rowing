@@ -89,7 +89,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="distance">{{ __('Distance')}}<span class="text-red">*</span></label>
-                                        <input id="distance" type="number" class="form-control @error('distance') is-invalid @enderror" name="distance" value="{{ old('distance') }}" placeholder="Distance in meters"  required>
+                                        <input readonly id="distance" type="number" class="form-control @error('distance') is-invalid @enderror" name="distance" value="{{ $league->distance }}" placeholder="Distance in meters"  required>
                                         <div class="help-block with-errors"></div>
                                         @error('distance')
                                         <span class="invalid-feedback" role="alert">

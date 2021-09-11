@@ -21,13 +21,17 @@ class ResultController extends Controller
         $path = $request->file('proof_photo')->store('proof_photo', 's3');
 
         $result = $league->results()->make(Arr::except(
-            $request->validated() + ['type' => $league->machine_type, 'weight_class' => $league->category],
+            $request->validated() + [
+                'type' => $league->machine_type,
+                'weight_class' => $league->category,
+                'distance' => $league->distance
+            ],
             ['proof_photo']));
         $result->proof_photo = $path;
         $result->athlete_id = auth()->id();
         $result->save();
 
-        return redirect()->route('athlete.my-leagues')->with('success', 'Result uploaded!');
+        return redirect()->route('athlete.results', $league)->with('success', 'Result uploaded!');
     }
 
     public function show(League $league)

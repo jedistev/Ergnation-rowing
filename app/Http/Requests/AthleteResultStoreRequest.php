@@ -31,7 +31,6 @@ class AthleteResultStoreRequest extends FormRequest
             'minutes' => ['required', 'numeric'],
             'seconds' => ['required', 'numeric'],
             'tenths' => ['required', 'numeric'],
-            'distance' => ['required', 'numeric'],
             'workout_date' => ['required', 'date'],
             'comments' => ['required', 'string'],
         ];
