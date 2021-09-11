@@ -134,6 +134,19 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
+                                        <label for="distance">{{ __('Distance')}}<span class="text-red">*</span></label>
+                                        <input id="distance" type="number" class="form-control @error('distance') is-invalid @enderror" name="distance" value="{{ $league->distance }}" placeholder="Distance in Meters" required>
+                                        <div class="help-block with-errors"></div>
+                                        @error('distance')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
                                         <label for="category">{{ __('Category')}}<span class="text-red">*</span></label>
                                         <select id="category" class="form-control @error('category') is-invalid @enderror" name="category" required>
                                             <option selected value="{{ \App\Models\League::TYPE_LIGHT_WEIGHT }}">{{ \App\Models\League::TYPE_LIGHT_WEIGHT }}</option>
@@ -227,7 +240,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="athletes">{{ __('Athletes')}}<span class="text-red">*</span></label>
-                                        <select multiple id="athletes" class="form-control select2 @error('athletes') is-invalid @enderror" name="athletes[]" required>
+                                        <select multiple id="athletes" class="form-control select2 @error('athletes') is-invalid @enderror" name="athletes[]">
                                             @forelse($athletes as $athlete)
                                                 <option {{ in_array($athlete->id, $leagueAthletes) ? 'selected' : '' }} value="{{ $athlete->id }}">{{ $athlete->name }} ({{ $athlete->email }})</option>
                                             @empty

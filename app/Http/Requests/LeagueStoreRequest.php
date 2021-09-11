@@ -31,6 +31,7 @@ class LeagueStoreRequest extends FormRequest
             'type' => ['required', 'string', Rule::in([League::TYPE_OPEN, League::TYPE_PRIVATE ])],
             'machine_type' => ['required', 'string', Rule::in([League::MACHINE_ERGATHLON, League::MACHINE_SKIING, League::MACHINE_BIKE, League::MACHINE_ROWING ])],
             'business' => ['required', 'string'], // @todo change to description in DB
+            'distance' => ['required', 'numeric'],
             'category' => ['required', 'string', Rule::in ([League::TYPE_LIGHT_WEIGHT, League::TYPE_HEAVY_WEIGHT ])],
             'gender' => ['required', 'string', Rule::in(['male', 'female', 'other'])],
             'age' => ['required', Rule::in(League::AGE_GROUP)],
@@ -38,7 +39,7 @@ class LeagueStoreRequest extends FormRequest
             'registration_expiration_date' => ['required', 'date'],
             'race_date' => ['required', 'date'],
             'allow_join' => ['required', Rule::in([0,1])],
-            'athletes.*' => ['required', Rule::exists('users', 'id')]
+            'athletes.*' => ['sometimes', Rule::exists('users', 'id')]
         ];
     }
 }

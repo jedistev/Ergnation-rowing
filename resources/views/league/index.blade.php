@@ -49,9 +49,10 @@
                                 <th>{{ __('Type')}}</th>
                                 <th>{{ __('Machine Type')}}</th>
                                 <th>{{ __('Allow Join')}}</th>
-                                <th>{{ __('Description')}}</th>
+{{--                                <th>{{ __('Description')}}</th>--}}
+                                <th>{{ __('Distance')}}</th>
                                 <th>{{ __('Category')}}</th>
-                                <th>{{ __('Gender')}}</th>
+{{--                                <th>{{ __('Gender')}}</th>--}}
                                 <th>{{ __('Age Group')}}</th>
                                 <th>{{ __('Athletes')}}</th>
                                 <th>{{ __('Start Date')}}</th>
@@ -68,14 +69,15 @@
                                     <td>{{ $league->type }}</td>
                                     <td>{{ $league->machine_type }}</td>
                                     <td>{{ $league->allow_join ? 'Yes' : 'No' }}</td>
-                                    <td>{{ $league->business }}</td>
+{{--                                    <td>{{ $league->business }}</td>--}}
+                                    <td>{{ $league->distance }}M</td>
                                     <td>{{ $league->category }}</td>
-                                    <td>{{ $league->gender }}</td>
+{{--                                    <td>{{ $league->gender }}</td>--}}
                                     <td>{{ $league->age }}</td>
                                     @if($league->athletes_count > 0)
                                         <td><a class="btn btn-link" href="{{ route('league.athletes', $league) }}">{{ $league->athletes_count }}</a></td>
                                     @else
-                                        <td>0</td>
+                                        <td><a class="btn btn-link" href="#">0</a></td>
                                     @endif
                                     <td>{{ $league->registration_start_date }}</td>
                                     <td>{{ $league->registration_expiration_date }}</td>
