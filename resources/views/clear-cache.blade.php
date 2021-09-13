@@ -10,7 +10,7 @@
                         <i class="ik ik-battery-charging bg-green"></i>
                         <div class="d-inline">
                             <h5>{{ __('Clear Cache')}}</h5>
-                            <span>{{ __('Create new user, assign roles & permissions')}}</span>
+                            <span>{{ __('Caching is the act of transparently storing data for future use in an attempt to make applications run faster')}}</span>
                         </div>
                     </div>
                 </div>
