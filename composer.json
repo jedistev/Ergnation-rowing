@@ -23,6 +23,7 @@
         "league/flysystem-aws-s3-v3": "~1.0",
         "mews/purifier": "^3.2",
         "mpociot/teamwork": "^6.1",
+        "rinvex/laravel-addresses": "^5.0",
         "spatie/laravel-permission": "^3.11",
         "yajra/laravel-datatables-oracle": "~9.0"
     },

@@ -9,7 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
 use Mpociot\Teamwork\Traits\UserHasTeams;
+use Illuminate\Database\Eloquent\Model;
+use Rinvex\Addresses\Traits\Addressable;
 use Storage;
+
 
 
 class User extends Authenticatable
@@ -72,4 +75,5 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(League::class, 'athlete_league', 'athlete_id');
     }
+
 }

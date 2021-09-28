@@ -107,6 +107,10 @@
                                     <input type="email" value="{{Auth::user()->email}}" class="form-control"
                                         name="email" id="email">
                                 </div>
+                                <div class="form-group">
+                                    <label for="Street">{{ __('Street')}}</label>
+                                    <input type="Street" value="{{Auth::user()->addresses->street}}" class="form-control" name="Street" id="Street">
+                                </div>
                                 <button type="submit"
                                     class="btn btn-primary form-control-right">{{ __('Update')}}</button>
                             </form>

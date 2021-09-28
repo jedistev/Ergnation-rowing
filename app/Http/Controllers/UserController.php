@@ -147,6 +147,8 @@ class UserController extends Controller
             $bug = $e->getMessage();
             return redirect()->back()->with('error', $bug);
         }
+
+
     }
 
     public function update(Request $request)
