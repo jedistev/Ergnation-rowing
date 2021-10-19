@@ -82,10 +82,7 @@
 		            </a>
 		        </div>
 		        <div class="col-md-12 m-5 mt-0 text-center">
-		            <a href="{{url('login')}}" class="btn btn-success">Go to Admin</a>
-		            <a href="https://documenter.getpostman.com/view/11223504/Szmh1vqc?version=latest" class="btn btn-danger">API Endpoint</a>
-
-
+		            <a href="{{url('login')}}" class="btn btn-success">Login</a>
 		        </div>
 
 		        </div>
@@ -93,6 +90,7 @@
 		</div>
   </main>
 </div>
+
 
 		<script src="{{ asset('all.js') }}"></script>
 
