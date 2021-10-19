@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 @endif
-                @if(auth()->user()->hasRole(['Super Admin','Business Owner']))
+                @if(auth()->user()->hasRole(['Super Admin','Business Owner','Individuals']))
                     <div class="nav-item {{ request()->is('league*') ? 'active open' : '' }} has-sub">
                         <a href="#"><i class="ik ik-align-justify"></i><span>{{ __('Leagues Management')}}</span></a>
                         <div class="submenu-content">
@@ -105,6 +105,22 @@
                         <div class="submenu-content">
                             <a href="{{ route('league.index') }}" class="menu-item {{ request()->is('league') ? 'active' : '' }}"> {{ __('Leagues')}}</a>
                             <a href="{{ route('athlete.my-leagues') }}" class="menu-item {{ request()->is('athlete/my-leagues') ? 'active' : '' }}"> {{ __('My Leagues')}}</a>
+                        </div>
+                    </div>
+                @endif
+
+
+                @if(auth()->user()->hasRole(['Individuals']))
+                    <div class="nav-item {{ request()->is('open/leagues') || request()->is('my-registered-leagues') || request()->is('all/leagues') ? 'active open' : '' }} has-sub">
+                        <a href="#"><i class="ik ik-align-justify"></i><span>{{ __('Leagues')}}</span></a>
+                        <div class="submenu-content">
+
+                            <a href="{{ route('leagues.myleagues') }}" class="menu-item {{ request()->is('all/leagues') ? 'active' : '' }}"> {{ __('My Leagues')}}</a>
+                            
+                            <a href="{{ route('leagues.open') }}" class="menu-item {{ request()->is('open/leagues') ? 'active' : '' }}"> {{ __('Open Leagues')}}</a>
+
+                            <a href="{{ route('leagues.myregistered') }}" class="menu-item {{ request()->is('my-registered-leagues') ? 'active' : '' }}"> {{ __('My Registered Leagues')}}</a>
+
                         </div>
                     </div>
                 @endif

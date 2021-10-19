@@ -58,12 +58,14 @@
                                 <th>{{ __('Start Date')}}</th>
                                 <th>{{ __('End Date')}}</th>
                                 <th>{{ __('Race Date')}}</th>
-                               
-                                <th>{{ __('Action')}}</th>
+                                
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($leagues as $league)
+                            @forelse($leagues as $newleague)
+                                <?php
+                                $league = App\Models\League::withCount('athletes')->where('id',$newleague->league_id)->first();
+                                ?>
                                 <tr>
                                     <td><img src="{{ $league->logo_url }}" width="50px"></td>
                                     <td>{{ $league->name }}</td>
@@ -84,17 +86,7 @@
                                     <td>{{ $league->registration_expiration_date }}</td>
                                     <td>{{ $league->race_date }}</td>
 {{--                                    <td>{{ $league->user->name }}</td>--}}
-                                     
-                                    <td>
-                                        <div class="table-actions">
-                                            <form action="{{ route('league.destroy', $league) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a href="{{ route('league.edit', $league) }}"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
-                                                <button onclick="return confirm('Are you sure?')" class="btn btn-link" type="submit"><i class="ik ik-trash-2 f-16 text-red"></i></button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                 
                                 </tr>
                             @empty
                                 <tr>

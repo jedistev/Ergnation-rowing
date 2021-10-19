@@ -58,8 +58,7 @@
                                 <th>{{ __('Start Date')}}</th>
                                 <th>{{ __('End Date')}}</th>
                                 <th>{{ __('Race Date')}}</th>
-                               
-                                <th>{{ __('Action')}}</th>
+                                <th>{{ __('Leaderboard')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -83,18 +82,8 @@
                                     <td>{{ $league->registration_start_date }}</td>
                                     <td>{{ $league->registration_expiration_date }}</td>
                                     <td>{{ $league->race_date }}</td>
-{{--                                    <td>{{ $league->user->name }}</td>--}}
-                                     
-                                    <td>
-                                        <div class="table-actions">
-                                            <form action="{{ route('league.destroy', $league) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a href="{{ route('league.edit', $league) }}"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
-                                                <button onclick="return confirm('Are you sure?')" class="btn btn-link" type="submit"><i class="ik ik-trash-2 f-16 text-red"></i></button>
-                                            </form>
-                                        </div>
-                                    </td>
+{{--                                    <td>{{ $league->user->name }}</td>--}}                                  
+                                    <td><a href="{!! route('league.leaderboard',$league->id)!!}" class="btn btn-info btn-sm">View</a></td> 
                                 </tr>
                             @empty
                                 <tr>

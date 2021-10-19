@@ -58,7 +58,6 @@
                                 <th>{{ __('Start Date')}}</th>
                                 <th>{{ __('End Date')}}</th>
                                 <th>{{ __('Race Date')}}</th>
-                               
                                 <th>{{ __('Action')}}</th>
                             </tr>
                             </thead>
@@ -84,15 +83,16 @@
                                     <td>{{ $league->registration_expiration_date }}</td>
                                     <td>{{ $league->race_date }}</td>
 {{--                                    <td>{{ $league->user->name }}</td>--}}
-                                     
                                     <td>
                                         <div class="table-actions">
-                                            <form action="{{ route('league.destroy', $league) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a href="{{ route('league.edit', $league) }}"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
-                                                <button onclick="return confirm('Are you sure?')" class="btn btn-link" type="submit"><i class="ik ik-trash-2 f-16 text-red"></i></button>
-                                            </form>
+                                            <?php
+                                            $already = App\Models\Leagueregistration::where('league_id', $league->id)->where('user_id',Auth::user()->id)->count();
+                                            ?>
+                                            @if($already == 0)
+                                                <a href="javascript:void(0)" id="Leaguebtn_{{ $league->id }}" class="LeagueRegister btn-sm btn-success" data-id="{{ $league->id }}" style="color:#fff;" >Register Now</a>
+                                            @else
+                                                <a href="javascript:void(0)" id="Leaguebtn_{{ $league->id }}" class=" btn-sm btn-danger" data-id="{{ $league->id }}" style="color:#fff;" >Already Register</a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -114,5 +114,43 @@
         <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
         <!--server side users table script-->
         <script src="{{ asset('js/custom.js') }}"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script type="text/javascript">
+
+$(document).on("click",".LeagueRegister", function(event){ 
+            event.preventDefault();
+            const leagueid = $(this).data("id");
+            swal({
+                title: 'Are you sure',
+                    text: 'you want to register for this League?',
+                    icon: 'warning',
+                    buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+
+                     jQuery.ajax({
+                       type:"GET",
+                       url:"{!! route('leagues.RegisteredLeague')!!}?leagueid="+leagueid,
+                       beforeSend: function()
+                              {
+                                  
+                              },
+                       success:function(res){               
+                        if(res){
+                            
+                            $("#Leaguebtn_"+leagueid).text('Registered')
+
+                        }else{
+                           
+                        }
+                       }
+                    });
+
+                }
+            });
+        });
+
+</script>
     @endpush
 @endsection

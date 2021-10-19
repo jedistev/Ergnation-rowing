@@ -65,6 +65,13 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('league/athletes/{league}', [LeagueController::class, 'athletes'])->name('league.athletes');
 	});
 
+
+	// League Routes for Individuals
+	Route::group(['middleware' => 'role:Super Admin|Business Owner|Athlete|Individuals'], function (){
+		Route::resource('league', LeagueController::class);
+		Route::get('league/athletes/{league}', [LeagueController::class, 'athletes'])->name('league.athletes');
+	});
+
     Route::group(['prefix' => 'athlete', 'middleware' => 'role:Athlete', 'as' => 'athlete.'], function (){
         Route::get('/my-leagues', [Athlete\LeagueController::class, 'myLeagues'])->name('my-leagues');
         Route::get('/results/upload/{league}', [Athlete\ResultController::class, 'create'])->name('results.create');
@@ -218,3 +225,19 @@ Route::group(['prefix' => 'teams', 'namespace' => 'Teamwork'], function()
     Route::delete('members/{id}/{user_id}', [App\Http\Controllers\Teamwork\TeamMemberController::class, 'destroy'])->name('teams.members.destroy');
     Route::get('accept/{token}', [App\Http\Controllers\Teamwork\AuthController::class, 'acceptInvite'])->name('teams.accept_invite');
 });
+
+
+// League Routes
+    Route::group(['middleware' => 'role:Individuals'], function (){
+        
+    	Route::get('all/leagues/', [LeagueController::class, 'myleagues'])->name('leagues.myleagues');
+        
+        Route::get('open/leagues/', [LeagueController::class, 'openleagues'])->name('leagues.open');
+
+        Route::get('my-registered-leagues/', [LeagueController::class, 'myregisteredleagues'])->name('leagues.myregistered');
+
+        Route::get('registered-league/', [LeagueController::class, 'RegisteredLeague'])->name('leagues.RegisteredLeague');
+
+        Route::get('league/leaderboard/{id}', [LeagueController::class, 'league_leaderboard'])->name('league.leaderboard');
+
+    });
