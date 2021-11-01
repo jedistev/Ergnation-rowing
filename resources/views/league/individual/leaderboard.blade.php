@@ -12,11 +12,13 @@
             <div class="row align-items-end">
                 <div class="col-lg-8">
                     <div class="page-header-title">
+                        
                         <i class="ik ik-users bg-blue"></i>
                         <div class="d-inline">
-                            <h5>{{ __('League Leaderboard')}}</h5>
-                            
+                            <h5>{{ __('League Preview')}}-{!! $league->name!!}</h5>
                         </div>
+
+
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -39,7 +41,20 @@
         <!-- end message area-->
             <div class="col-md-12">
                 <div class="card p-3">
-                    <div class="card-header"><h3>{{ __('Leaderboard')}}</h3></div>
+                    
+                    <div class="card-header">
+                        <h3>{{ __('League Preview')}}</h3>
+                        <?php
+                            $nowdate = date('Y-m-d');
+                        ?>
+                        @if($nowdate == $league->race_date)
+                        @if($upload_count == 0)
+                            &nbsp; &nbsp;<a href="{{ route('athlete.results.create', $league) }}" class="btn-info btn-sm">Upload Result</a>
+                        @endif
+                        @endif
+ 
+                    </div>
+                    
                     <div class="card-body">
                         <table id="league_table" class="table datatable">
                             <thead>

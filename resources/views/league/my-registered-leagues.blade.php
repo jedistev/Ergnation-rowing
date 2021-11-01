@@ -58,6 +58,7 @@
                                 <th>{{ __('Start Date')}}</th>
                                 <th>{{ __('End Date')}}</th>
                                 <th>{{ __('Race Date')}}</th>
+                                <th>{{ __('Leaderboard')}}</th>
                                 
                             </tr>
                             </thead>
@@ -85,7 +86,10 @@
                                     <td>{{ $league->registration_start_date }}</td>
                                     <td>{{ $league->registration_expiration_date }}</td>
                                     <td>{{ $league->race_date }}</td>
-{{--                                    <td>{{ $league->user->name }}</td>--}}
+{{--                                    <td>{{ $league->user->name }}</td>--}}  
+
+ <td><a href="{!! route('league.leaderboard',$league->id)!!}" class=" btn-info btn-sm">Preview</a></td> 
+
                                  
                                 </tr>
                             @empty

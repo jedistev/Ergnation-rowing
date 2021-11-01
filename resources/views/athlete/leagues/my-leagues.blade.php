@@ -69,19 +69,29 @@
                                     <td>{{ $league->registration_expiration_date }}</td>
                                     <td>{{ $league->race_date }}</td>
                                     <td>
+                                        <?php 
+                                        $userid = Auth::user()->id;
+                                        $upload_count = DB::table('athlete_results')->where('league_id',$league->id)->where('athlete_id',$userid)->count();
+                                        $nowdate = date('Y-m-d');
+                                        ?>
                                         <div class="table-actions">
                                             <a href="{{ route('athlete.league.leave', $league) }}"><i
                                                     data-toggle="tooltip" data-title="Leave League"
                                                     class="ik ik-log-out"></i></a>
 
-                                                <a href="{{ route('athlete.results', $league) }}"><i
+                                            <a href="{{ route('athlete.results', $league) }}">
+                                                <i
                                                         data-toggle="tooltip" data-title="View My Result"
-                                                        class="ik ik-eye"></i></a>
-
-                                            <a href="{{ route('athlete.results.create', $league) }}"><i
+                                                        class="ik ik-eye"></i>
+                                            </a>
+                                            @if($nowdate == $league->race_date)
+                                            <a href="{{ route('athlete.results.create', $league) }}">
+                                                <i
                                                     data-toggle="tooltip" data-title="Upload My Result"
-                                                    class="ik ik-upload"></i></a>
-
+                                                    class="ik ik-upload"></i>
+                                            </a>
+                                            @endif
+                                            
                                         </div>
                                     </td>
                                 </tr>

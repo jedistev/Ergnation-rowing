@@ -84,16 +84,30 @@
                                     <td>{{ $league->race_date }}</td>
 {{--                                    <td>{{ $league->user->name }}</td>--}}
                                     <td>
-                                        <div class="table-actions">
-                                            <?php
-                                            $already = App\Models\Leagueregistration::where('league_id', $league->id)->where('user_id',Auth::user()->id)->count();
-                                            ?>
-                                            @if($already == 0)
-                                                <a href="javascript:void(0)" id="Leaguebtn_{{ $league->id }}" class="LeagueRegister btn-sm btn-success" data-id="{{ $league->id }}" style="color:#fff;" >Register Now</a>
-                                            @else
-                                                <a href="javascript:void(0)" id="Leaguebtn_{{ $league->id }}" class=" btn-sm btn-danger" data-id="{{ $league->id }}" style="color:#fff;" >Already Register</a>
-                                            @endif
-                                        </div>
+                                    
+                            <?php
+                            $nowday = date('Y-m-d');
+                            $start_date = $league->registration_start_date;
+                            $expiration_date = $league->registration_expiration_date;
+                            ?>
+                            @if (($nowday >= $start_date) && ($nowday <= $expiration_date))
+                                <div class="table-actions">
+                                    <?php
+                                    $already = DB::table('athlete_league')->where('league_id', $league->id)->where('athlete_id',Auth::user()->id)->count();
+                                    ?>
+                                    @if($already == 0)
+                                        <a href="javascript:void(0)" id="Leaguebtn_{{ $league->id }}" class="LeagueRegister btn-sm btn-success" data-id="{{ $league->id }}" style="color:#fff;" >Join</a>
+                                    @else
+                                        <a href="javascript:void(0)" id="Leaguebtn_{{ $league->id }}" class="LeagueLeave btn-sm btn-danger" data-id="{{ $league->id }}" style="color:#fff;" >Leave</a>
+                                    @endif
+
+
+                                </div>
+                            @endif
+
+                            <a href="{!! route('league.leaderboard',$league->id)!!}" class=" btn-info btn-sm">Preview</a> 
+                                     
+
                                     </td>
                                 </tr>
                             @empty
@@ -131,7 +145,7 @@ $(document).on("click",".LeagueRegister", function(event){
 
                      jQuery.ajax({
                        type:"GET",
-                       url:"{!! route('leagues.RegisteredLeague')!!}?leagueid="+leagueid,
+                       url:"{!! route('leagues.joinLeague')!!}?leagueid="+leagueid,
                        beforeSend: function()
                               {
                                   
@@ -139,7 +153,12 @@ $(document).on("click",".LeagueRegister", function(event){
                        success:function(res){               
                         if(res){
                             
-                            $("#Leaguebtn_"+leagueid).text('Registered')
+                            $("#Leaguebtn_"+leagueid).text('leave');
+                            
+                            $("#Leaguebtn_"+leagueid).addClass("LeagueLeave");
+                            $("#Leaguebtn_"+leagueid).addClass("btn-danger");
+                            $("#Leaguebtn_"+leagueid).removeClass("LeagueRegister");
+                            $("#Leaguebtn_"+leagueid).removeClass("btn-success");
 
                         }else{
                            
@@ -150,6 +169,48 @@ $(document).on("click",".LeagueRegister", function(event){
                 }
             });
         });
+
+
+
+$(document).on("click",".LeagueLeave", function(event){ 
+            event.preventDefault();
+            const leagueid = $(this).data("id");
+            swal({
+                title: 'Are you sure',
+                    text: 'you want to leave this League?',
+                    icon: 'warning',
+                    buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+
+                     jQuery.ajax({
+                       type:"GET",
+                       url:"{!! route('leagues.LeaveLeague')!!}?leagueid="+leagueid,
+                       beforeSend: function()
+                              {
+                                  
+                              },
+                       success:function(res){               
+                        if(res){
+                            
+                            $("#Leaguebtn_"+leagueid).text('Join')
+
+                            $("#Leaguebtn_"+leagueid).addClass("LeagueRegister");
+                            $("#Leaguebtn_"+leagueid).addClass("btn-success");
+
+                            $("#Leaguebtn_"+leagueid).removeClass("LeagueLeave");
+                            $("#Leaguebtn_"+leagueid).removeClass("btn-danger");
+
+                        }else{
+                           
+                        }
+                       }
+                    });
+
+                }
+            });
+        });
+
 
 </script>
     @endpush

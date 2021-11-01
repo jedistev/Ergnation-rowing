@@ -87,14 +87,33 @@
                                      
                                     <td>
                                         <div class="table-actions">
+
+                                         @if(auth()->user()->hasRole('Super Admin'))
                                             <form action="{{ route('league.destroy', $league) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <a href="{{ route('league.edit', $league) }}"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
                                                 <button onclick="return confirm('Are you sure?')" class="btn btn-link" type="submit"><i class="ik ik-trash-2 f-16 text-red"></i></button>
+                                            @else
+
+                                            @if(Auth::user()->id == $league->user_id)
+
+                                            <form action="{{ route('league.destroy', $league) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <a href="{{ route('league.edit', $league) }}"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
+                                                <button onclick="return confirm('Are you sure?')" class="btn btn-link" type="submit"><i class="ik ik-trash-2 f-16 text-red"></i></button>
+
+                                            @endif
+
+                                            @endif
+
+                                                <a href="{!! route('league.leaderboard',$league->id)!!}" class="btn-info btn-sm">Preview</a>
+
                                             </form>
                                         </div>
                                     </td>
+                                    
                                 </tr>
                             @empty
                                 <tr>

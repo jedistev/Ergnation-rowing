@@ -83,7 +83,7 @@
                                     <td>{{ $league->registration_expiration_date }}</td>
                                     <td>{{ $league->race_date }}</td>
 {{--                                    <td>{{ $league->user->name }}</td>--}}                                  
-                                    <td><a href="{!! route('league.leaderboard',$league->id)!!}" class="btn btn-info btn-sm">View</a></td> 
+                                    <td><a href="{!! route('league.leaderboard',$league->id)!!}" class=" btn-info btn-sm">Preview</a></td> 
                                 </tr>
                             @empty
                                 <tr>

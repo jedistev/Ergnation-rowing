@@ -101,33 +101,46 @@ class LeagueController extends Controller
     {
         $userid = Auth::user()->id;
 
-        $leagues = DB::table('leagueregistrations')
-    ->leftJoin('leagues', 'leagueregistrations.league_id', '=', 'leagues.id')->where('leagueregistrations.user_id', '=',$userid)->get();
+        $leagues = DB::table('athlete_league')
+    ->leftJoin('leagues', 'athlete_league.league_id', '=', 'leagues.id')->where('athlete_league.athlete_id', '=',$userid)->get();
 
         //$leagues = League::withCount('athletes')->where('type','Open')->get();
         return  view('league.my-registered-leagues', compact('leagues'));
     }
 
-    public function RegisteredLeague(Request $request)
+    public function joinLeague(Request $request)
     {
         $user_id = Auth::user()->id;
         $league_id = $request->leagueid;
-       
+        $league = League::where('id',$league_id)->first();
+
         $already = Leagueregistration::where('league_id',$league_id)->where('user_id',Auth::user()->id)->count();
         
         if($already == 0)
         {
-            $leagueregister = new Leagueregistration([
-                'user_id' => $user_id,
-                'league_id' => $league_id
-            ]);
-
-            $leagueregister->save();
+            DB::table('athlete_league')->insert(
+                ['athlete_id' => Auth::user()->id,'league_id'=> $league_id]
+              );
         }
 
         return response()->json([
                 'status'=> true,
                 'data'=> "Your registration has been sent to organizer.Thanks for registration in league."
+                ]);
+    }
+
+
+    public function LeaveLeague(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $league_id = $request->leagueid;
+        $league = League::where('id',$league_id)->first();
+
+        $delete = DB::table('athlete_league')->where('league_id', $league_id)->where('athlete_id',$user_id)->delete();
+
+        return response()->json([
+                'status'=> true,
+                'data'=> "Your registration has been canceled."
                 ]);
     }
 
@@ -147,7 +160,9 @@ class LeagueController extends Controller
         
         $league = League::where('id',$id)->first();
 
-        return  view('league.individual.leaderboard', compact('athletes','league'));
+        $upload_count = DB::table('athlete_results')->where('league_id',$id)->where('athlete_id',$userid)->count();
+
+        return  view('league.individual.leaderboard', compact('athletes','league','upload_count'));
     }
 
 

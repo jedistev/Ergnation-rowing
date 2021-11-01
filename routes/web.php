@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Common\ProfileController;
 use App\Http\Controllers\League\LeagueController;
 use Illuminate\Support\Facades\Route;
@@ -72,7 +71,7 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('league/athletes/{league}', [LeagueController::class, 'athletes'])->name('league.athletes');
 	});
 
-    Route::group(['prefix' => 'athlete', 'middleware' => 'role:Athlete', 'as' => 'athlete.'], function (){
+    Route::group(['prefix' => 'athlete', 'middleware' => 'role:Athlete|Individuals', 'as' => 'athlete.'], function (){
         Route::get('/my-leagues', [Athlete\LeagueController::class, 'myLeagues'])->name('my-leagues');
         Route::get('/results/upload/{league}', [Athlete\ResultController::class, 'create'])->name('results.create');
         Route::post('/results/upload/{league}', [Athlete\ResultController::class, 'store'])->name('results.store');
@@ -226,7 +225,8 @@ Route::group(['prefix' => 'teams', 'namespace' => 'Teamwork'], function()
     Route::get('accept/{token}', [App\Http\Controllers\Teamwork\AuthController::class, 'acceptInvite'])->name('teams.accept_invite');
 });
 
-
+ Route::get('league/leaderboard/{id}', [LeagueController::class, 'league_leaderboard'])->name('league.leaderboard');
+ 
 // League Routes
     Route::group(['middleware' => 'role:Individuals'], function (){
         
@@ -236,8 +236,8 @@ Route::group(['prefix' => 'teams', 'namespace' => 'Teamwork'], function()
 
         Route::get('my-registered-leagues/', [LeagueController::class, 'myregisteredleagues'])->name('leagues.myregistered');
 
-        Route::get('registered-league/', [LeagueController::class, 'RegisteredLeague'])->name('leagues.RegisteredLeague');
+        Route::get('join-league/', [LeagueController::class, 'joinLeague'])->name('leagues.joinLeague');
 
-        Route::get('league/leaderboard/{id}', [LeagueController::class, 'league_leaderboard'])->name('league.leaderboard');
+        Route::get('leave-league/', [LeagueController::class, 'LeaveLeague'])->name('leagues.LeaveLeague');
 
     });
