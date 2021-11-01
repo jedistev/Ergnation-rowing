@@ -20,7 +20,6 @@
 	    	</div>
 	    	<!-- initiate footer section-->
 	    	@include('include.footer')
-
     	</div>
     </div>
 	<!-- initiate scripts-->
