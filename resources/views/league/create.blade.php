@@ -99,7 +99,6 @@
                                             <option selected value="{{ \App\Models\League::MACHINE_ROWING }}">{{ \App\Models\League::MACHINE_ROWING }}</option>
                                             <option {{ old('machine_type') == \App\Models\League::MACHINE_BIKE ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_BIKE }}">{{ \App\Models\League::MACHINE_BIKE }}</option>
                                             <option {{ old('machine_type') == \App\Models\League::MACHINE_SKIING ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_SKIING }}">{{ \App\Models\League::MACHINE_SKIING }}</option>
-                                            <option {{ old('machine_type') == \App\Models\League::MACHINE_ERGATHLON ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_ERGATHLON }}">{{ \App\Models\League::MACHINE_ERGATHLON }}</option>
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('machine_type')
@@ -112,10 +111,23 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="business">{{ __('Business')}}<span class="text-red">*</span></label>
+                                        <label for="business">{{ __('Description')}}<span class="text-red">*</span></label>
                                         <input id="business" type="text" class="form-control @error('business') is-invalid @enderror" name="business" value="{{ old('business') }}" required>
                                         <div class="help-block with-errors"></div>
                                         @error('business')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="distance">{{ __('Distance')}}<span class="text-red">*</span></label>
+                                        <input id="distance" type="number" class="form-control @error('distance') is-invalid @enderror" name="distance" value="{{ old('distance') }}" placeholder="Distance in Meters" required>
+                                        <div class="help-block with-errors"></div>
+                                        @error('distance')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -217,7 +229,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="athletes">{{ __('Athletes')}}<span class="text-red">*</span></label>
-                                        <select multiple id="athletes" class="form-control select2 @error('athletes') is-invalid @enderror" name="athletes[]" required>
+                                        <select multiple id="athletes" class="form-control select2 @error('athletes') is-invalid @enderror" name="athletes[]">
                                             @forelse($athletes as $athlete)
                                                 <option value="{{ $athlete->id }}">{{ $athlete->name }} ({{ $athlete->email }})</option>
                                             @empty

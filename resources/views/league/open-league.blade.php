@@ -58,7 +58,6 @@
                                 <th>{{ __('Start Date')}}</th>
                                 <th>{{ __('End Date')}}</th>
                                 <th>{{ __('Race Date')}}</th>
-                               
                                 <th>{{ __('Action')}}</th>
                             </tr>
                             </thead>
@@ -84,36 +83,32 @@
                                     <td>{{ $league->registration_expiration_date }}</td>
                                     <td>{{ $league->race_date }}</td>
 {{--                                    <td>{{ $league->user->name }}</td>--}}
-                                     
                                     <td>
-                                        <div class="table-actions">
-
-                                         @if(auth()->user()->hasRole('Super Admin'))
-                                            <form action="{{ route('league.destroy', $league) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a href="{{ route('league.edit', $league) }}"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
-                                                <button onclick="return confirm('Are you sure?')" class="btn btn-link" type="submit"><i class="ik ik-trash-2 f-16 text-red"></i></button>
-                                            @else
-
-                                            @if(Auth::user()->id == $league->user_id)
-
-                                            <form action="{{ route('league.destroy', $league) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <a href="{{ route('league.edit', $league) }}"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
-                                                <button onclick="return confirm('Are you sure?')" class="btn btn-link" type="submit"><i class="ik ik-trash-2 f-16 text-red"></i></button>
-
-                                            @endif
-
-                                            @endif
-
-                                                <a href="{!! route('league.leaderboard',$league->id)!!}" class="btn-info btn-sm">Preview</a>
-
-                                            </form>
-                                        </div>
-                                    </td>
                                     
+                            <?php
+                            $nowday = date('Y-m-d');
+                            $start_date = $league->registration_start_date;
+                            $expiration_date = $league->registration_expiration_date;
+                            ?>
+                            @if (($nowday >= $start_date) && ($nowday <= $expiration_date))
+                                <div class="table-actions">
+                                    <?php
+                                    $already = DB::table('athlete_league')->where('league_id', $league->id)->where('athlete_id',Auth::user()->id)->count();
+                                    ?>
+                                    @if($already == 0)
+                                        <a href="javascript:void(0)" id="Leaguebtn_{{ $league->id }}" class="LeagueRegister btn-sm btn-success" data-id="{{ $league->id }}" style="color:#fff;" >Join</a>
+                                    @else
+                                        <a href="javascript:void(0)" id="Leaguebtn_{{ $league->id }}" class="LeagueLeave btn-sm btn-danger" data-id="{{ $league->id }}" style="color:#fff;" >Leave</a>
+                                    @endif
+
+
+                                </div>
+                            @endif
+
+                            <a href="{!! route('league.leaderboard',$league->id)!!}" class=" btn-info btn-sm">Preview</a> 
+                                     
+
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
@@ -133,5 +128,90 @@
         <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
         <!--server side users table script-->
         <script src="{{ asset('js/custom.js') }}"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script type="text/javascript">
+
+$(document).on("click",".LeagueRegister", function(event){ 
+            event.preventDefault();
+            const leagueid = $(this).data("id");
+            swal({
+                title: 'Are you sure',
+                    text: 'you want to register for this League?',
+                    icon: 'warning',
+                    buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+
+                     jQuery.ajax({
+                       type:"GET",
+                       url:"{!! route('leagues.joinLeague')!!}?leagueid="+leagueid,
+                       beforeSend: function()
+                              {
+                                  
+                              },
+                       success:function(res){               
+                        if(res){
+                            
+                            $("#Leaguebtn_"+leagueid).text('leave');
+                            
+                            $("#Leaguebtn_"+leagueid).addClass("LeagueLeave");
+                            $("#Leaguebtn_"+leagueid).addClass("btn-danger");
+                            $("#Leaguebtn_"+leagueid).removeClass("LeagueRegister");
+                            $("#Leaguebtn_"+leagueid).removeClass("btn-success");
+
+                        }else{
+                           
+                        }
+                       }
+                    });
+
+                }
+            });
+        });
+
+
+
+$(document).on("click",".LeagueLeave", function(event){ 
+            event.preventDefault();
+            const leagueid = $(this).data("id");
+            swal({
+                title: 'Are you sure',
+                    text: 'you want to leave this League?',
+                    icon: 'warning',
+                    buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
+                if (value) {
+
+                     jQuery.ajax({
+                       type:"GET",
+                       url:"{!! route('leagues.LeaveLeague')!!}?leagueid="+leagueid,
+                       beforeSend: function()
+                              {
+                                  
+                              },
+                       success:function(res){               
+                        if(res){
+                            
+                            $("#Leaguebtn_"+leagueid).text('Join')
+
+                            $("#Leaguebtn_"+leagueid).addClass("LeagueRegister");
+                            $("#Leaguebtn_"+leagueid).addClass("btn-success");
+
+                            $("#Leaguebtn_"+leagueid).removeClass("LeagueLeave");
+                            $("#Leaguebtn_"+leagueid).removeClass("btn-danger");
+
+                        }else{
+                           
+                        }
+                       }
+                    });
+
+                }
+            });
+        });
+
+
+</script>
     @endpush
 @endsection

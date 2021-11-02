@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LeagueStoreRequest;
 use App\Http\Requests\LeagueUpdateRequest;
 use App\Models\League;
+use App\Models\Leagueregistration;
 use App\User;
 use Arr;
 use Illuminate\Http\Request;
 use Storage;
+use Auth;
+use DB;
 
 class LeagueController extends Controller
 {
@@ -87,4 +90,80 @@ class LeagueController extends Controller
         $athletes = $league->athletes;
         return view('league.league-athletes', compact('athletes'));
     }
+
+    public function openleagues()
+    {
+        $leagues = League::withCount('athletes')->where('type','Open')->get();
+        return  view('league.open-league', compact('leagues'));
+    }
+
+    public function myregisteredleagues()
+    {
+        $userid = Auth::user()->id;
+
+        $leagues = DB::table('athlete_league')
+    ->leftJoin('leagues', 'athlete_league.league_id', '=', 'leagues.id')->where('athlete_league.athlete_id', '=',$userid)->get();
+
+        //$leagues = League::withCount('athletes')->where('type','Open')->get();
+        return  view('league.my-registered-leagues', compact('leagues'));
+    }
+
+    public function joinLeague(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $league_id = $request->leagueid;
+        $league = League::where('id',$league_id)->first();
+
+        $already = Leagueregistration::where('league_id',$league_id)->where('user_id',Auth::user()->id)->count();
+        
+        if($already == 0)
+        {
+            DB::table('athlete_league')->insert(
+                ['athlete_id' => Auth::user()->id,'league_id'=> $league_id]
+              );
+        }
+
+        return response()->json([
+                'status'=> true,
+                'data'=> "Your registration has been sent to organizer.Thanks for registration in league."
+                ]);
+    }
+
+
+    public function LeaveLeague(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $league_id = $request->leagueid;
+        $league = League::where('id',$league_id)->first();
+
+        $delete = DB::table('athlete_league')->where('league_id', $league_id)->where('athlete_id',$user_id)->delete();
+
+        return response()->json([
+                'status'=> true,
+                'data'=> "Your registration has been canceled."
+                ]);
+    }
+
+    /** Individual create league **/
+
+    public function myleagues()
+    {
+        $userid = Auth::user()->id;
+        $leagues = League::where('user_id',$userid)->withCount('athletes')->get();
+        return  view('league.individual.index', compact('leagues'));
+    }
+
+    public function league_leaderboard($id)
+    {
+        $userid = Auth::user()->id;
+        $athletes = DB::table('athlete_results')->where('league_id',$id)->orderBy('hours', 'ASC')->orderBy('minutes', 'ASC')->orderBy('seconds', 'ASC')->get();
+        
+        $league = League::where('id',$id)->first();
+
+        $upload_count = DB::table('athlete_results')->where('league_id',$id)->where('athlete_id',$userid)->count();
+
+        return  view('league.individual.leaderboard', compact('athletes','league','upload_count'));
+    }
+
+
 }

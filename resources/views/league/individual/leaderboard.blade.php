@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Leagues Results')
+@section('title', 'Leagues')
 @section('content')
     <!-- push external head elements to head -->
     @push('head')
@@ -12,10 +12,13 @@
             <div class="row align-items-end">
                 <div class="col-lg-8">
                     <div class="page-header-title">
+                        
                         <i class="ik ik-users bg-blue"></i>
                         <div class="d-inline">
-                            <h5>{{ __('Leagues Results')}}</h5>
+                            <h5>{{ __('League Preview')}}-{!! $league->name!!}</h5>
                         </div>
+
+
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -25,7 +28,7 @@
                                 <a href="{{route('dashboard')}}"><i class="ik ik-home"></i></a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#">{{ __('Leagues Results')}}</a>
+                                <a href="{!! route('leagues.myleagues') !!}">{{ __('Leagues')}}</a>
                             </li>
                         </ol>
                     </nav>
@@ -38,35 +41,54 @@
         <!-- end message area-->
             <div class="col-md-12">
                 <div class="card p-3">
-                    <div class="card-header"><h3>{{ __('Leagues Results')}}</h3></div>
+                    
+                    <div class="card-header">
+                        <h3>{{ __('League Preview')}}</h3>
+                        <?php
+                            $nowdate = date('Y-m-d');
+                        ?>
+                        @if($nowdate == $league->race_date)
+                        @if($upload_count == 0)
+                            &nbsp; &nbsp;<a href="{{ route('athlete.results.create', $league) }}" class="btn-info btn-sm">Upload Result</a>
+                        @endif
+                        @endif
+ 
+                    </div>
+                    
                     <div class="card-body">
                         <table id="league_table" class="table datatable">
                             <thead>
                             <tr>
-                                <th>{{ __('Proof')}}</th>
-                                <th>{{ __('League Name')}}</th>
-                                <th>{{ __('Type')}}</th>
-                                <th>{{ __('Weight Class')}}</th>
-                                <th>{{ __('Total Time')}}</th>
-                                <th>{{ __('Distance')}}</th>
-                                <th>{{ __('Workout Date')}}</th>
-                                <th>{{ __('Comments')}}</th>
+                                <th>{{ __('Place')}}</th>
+                                <th>{{ __('Row')}}</th>
+                                <th>{{ __('Timing')}}</th>
+                                <th>{{ __('First Name')}}</th>
+                                <th>{{ __('Last Name')}}</th>
+                                <th>{{ __('Gender')}}</th>
+                                <th>{{ __('Age')}}</th>
+                                <th>{{ __('Machine type')}}</th>
+                              
+                               
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($results as $result)
+                            @forelse($athletes as $athlete)
+                            <?php $athlete_data = App\User::where('id',$athlete->athlete_id)->first(); ?>
                                 <tr>
-                                    <td><a href="{{ $result->proof_url }}"><img width="50px"
-                                                                                src="{{ $result->proof_url }}"></a></td>
-                                    <td>{{ $result->league->name }}</td>
-                                    <td>{{ $result->type }}</td>
-                                    <td>{{ $result->weight_class }}</td>
-                                    <td>{{ $result->hours.'H' }} {{ $result->minutes.'M' }} {{ $result->seconds.'S' }} {{ $result->tenths.'T' }}</td>
-                                    <td>{{ $result->distance }} M</td>
-                                    <td>{{ $result->workout_date }}</td>
-                                    <td>{{ $result->comments }}</td>
+                                    <td>{{ $loop->iteration}}</td>
+                                    <td>{{ $league->distance }}m</td>
+                                    <td>{{ $athlete->hours }}:{{ $athlete->minutes }}:{{ $athlete->seconds }}</td>
+                                    <td>{{ $athlete_data->firstname }}</td>
+                                    <td>{{ $athlete_data->surname }}</td>
+                                    <td>{{ $league->gender }}</td>
+                                    <td>{{ $league->age }}</td>
+                                    <td>{{ $league->machine_type }}</td>
+
                                 </tr>
                             @empty
+                                <tr>
+                                    <td colspan="9">No Results Found</td>
+                                </tr>
                             @endforelse
                             </tbody>
                         </table>

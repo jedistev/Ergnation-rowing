@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Edit League')
+@section('title', 'Add League')
 @section('content')
     <!-- push external head elements to head -->
     @push('head')
@@ -15,8 +15,8 @@
                     <div class="page-header-title">
                         <i class="ik ik-user-plus bg-blue"></i>
                         <div class="d-inline">
-                            <h5>{{ __('Edit League')}}</h5>
-                            <span>{{ __('Edit League')}}</span>
+                            <h5>{{ __('Add League')}}</h5>
+                            <span>{{ __('Create new League and assign athlete')}}</span>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                                 <a href="{{url('dashboard')}}"><i class="ik ik-home"></i></a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#">{{ __('Edit League')}}</a>
+                                <a href="#">{{ __('Add League')}}</a>
                             </li>
                         </ol>
                     </nav>
@@ -41,20 +41,17 @@
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header">
-                        <h3>{{ __('Edit League')}}</h3>
+                        <h3>{{ __('Add League')}}</h3>
                     </div>
                     <div class="card-body">
-                        <form enctype="multipart/form-data" class="forms-sample" method="POST" action="{{ route('league.update', $league) }}" >
+                        <form enctype="multipart/form-data" class="forms-sample" method="POST" action="{{ route('league.store') }}" >
                             @csrf
-                            @method('PUT')
-
                             <div class="row">
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="logo">{{ __('Brand Logo')}}</label>
-                                        <input id="logo" type="file" accept="image/*" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') }}">
-                                        <span class="text-muted">This will replace old logo</span>
+                                        <label for="logo">{{ __('Brand Logo')}}<span class="text-red">*</span></label>
+                                        <input id="logo" type="file" accept="image/*" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') }}" required>
                                         <div class="help-block with-errors"></div>
 
                                         @error('logo')
@@ -67,15 +64,8 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="logo">{{ __('Old Logo')}}<span class="text-red">*</span></label>
-                                        <img src="{{ $league->logo_url }}" width="100px">
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
                                         <label for="name">{{ __('Name')}}<span class="text-red">*</span></label>
-                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $league->name }}" placeholder="Enter league name" required>
+                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Enter league name" required>
                                         <div class="help-block with-errors"></div>
 
                                         @error('name')
@@ -91,7 +81,7 @@
                                         <label for="type">{{ __('Type')}}<span class="text-red">*</span></label>
                                         <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
                                             <option selected value="{{ \App\Models\League::TYPE_OPEN }}">{{ \App\Models\League::TYPE_OPEN }}</option>
-                                            <option {{ $league->type == \App\Models\League::TYPE_PRIVATE ? 'selected' : '' }} value="{{ \App\Models\League::TYPE_PRIVATE }}">{{ \App\Models\League::TYPE_PRIVATE }}</option>
+                                            <option {{ old('type') == \App\Models\League::TYPE_PRIVATE ? 'selected' : '' }} value="{{ \App\Models\League::TYPE_PRIVATE }}">{{ \App\Models\League::TYPE_PRIVATE }}</option>
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('type')
@@ -107,8 +97,8 @@
                                         <label for="machine_type">{{ __('Machine Type')}}<span class="text-red">*</span></label>
                                         <select id="machine_type" class="form-control @error('machine_type') is-invalid @enderror" name="machine_type" required>
                                             <option selected value="{{ \App\Models\League::MACHINE_ROWING }}">{{ \App\Models\League::MACHINE_ROWING }}</option>
-                                            <option {{ $league->machine_type == \App\Models\League::MACHINE_BIKE ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_BIKE }}">{{ \App\Models\League::MACHINE_BIKE }}</option>
-                                            <option {{ $league->machine_type == \App\Models\League::MACHINE_SKIING ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_SKIING }}">{{ \App\Models\League::MACHINE_SKIING }}</option>
+                                            <option {{ old('machine_type') == \App\Models\League::MACHINE_BIKE ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_BIKE }}">{{ \App\Models\League::MACHINE_BIKE }}</option>
+                                            <option {{ old('machine_type') == \App\Models\League::MACHINE_SKIING ? 'selected' : '' }} value="{{ \App\Models\League::MACHINE_SKIING }}">{{ \App\Models\League::MACHINE_SKIING }}</option>
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('machine_type')
@@ -122,22 +112,9 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="business">{{ __('Description')}}<span class="text-red">*</span></label>
-                                        <input id="business" type="text" class="form-control @error('business') is-invalid @enderror" name="business" value="{{ $league->business }}" required>
+                                        <input id="business" type="text" class="form-control @error('business') is-invalid @enderror" name="business" value="{{ old('business') }}" required>
                                         <div class="help-block with-errors"></div>
                                         @error('business')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="distance">{{ __('Distance')}}<span class="text-red">*</span></label>
-                                        <input id="distance" type="number" class="form-control @error('distance') is-invalid @enderror" name="distance" value="{{ $league->distance }}" placeholder="Distance in Meters" required>
-                                        <div class="help-block with-errors"></div>
-                                        @error('distance')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -150,13 +127,13 @@
                                         <label for="category">{{ __('Category')}}<span class="text-red">*</span></label>
                                         <select id="category" class="form-control @error('category') is-invalid @enderror" name="category" required>
                                             <option selected value="{{ \App\Models\League::TYPE_LIGHT_WEIGHT }}">{{ \App\Models\League::TYPE_LIGHT_WEIGHT }}</option>
-                                            <option {{ $league->category == \App\Models\League::TYPE_HEAVY_WEIGHT ? 'selected' : '' }} value="{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}">{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}</option>
+                                            <option {{ old('category') == \App\Models\League::TYPE_HEAVY_WEIGHT ? 'selected' : '' }} value="{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}">{{ \App\Models\League::TYPE_HEAVY_WEIGHT }}</option>
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('category')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
-                                            </span>
+                                        </span>
                                         @enderror
                                     </div>
                                 </div>
@@ -166,8 +143,8 @@
                                         <label for="gender">{{ __('Gender')}}<span class="text-red">*</span></label>
                                         <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender" required>
                                             <option selected value="male">Male</option>
-                                            <option {{ $league->gender == 'female' ? 'selected' : '' }} value="female">Female</option>
-                                            <option {{ $league->gender == 'other' ? 'selected' : '' }} value="other">Other</option>
+                                            <option {{ old('gender') == 'female' ? 'selected' : '' }} value="female">Female</option>
+                                            <option {{ old('gender') == 'other' ? 'selected' : '' }} value="other">Other</option>
                                         </select>
                                         <div class="help-block with-errors"></div>
                                         @error('gender')
@@ -184,7 +161,7 @@
                                         <select id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" required>
                                             <option value="">Select Age Group</option>
                                             @forelse(\App\Models\League::AGE_GROUP as $value)
-                                                <option {{ $league->age == $value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
+                                                <option {{ old('age') == $value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
                                             @empty
                                             @endforelse
                                         </select>
@@ -197,11 +174,10 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="registration_start_date">{{ __('Registration Start Date')}}<span class="text-red">*</span></label>
-                                        <input id="registration_start_date" type="date" class="form-control @error('registration_start_date') is-invalid @enderror" name="registration_start_date" value="{{ $league->registration_start_date }}" placeholder="Enter registration start date" required>
+                                        <input id="registration_start_date" type="date" class="form-control @error('registration_start_date') is-invalid @enderror" name="registration_start_date" value="{{ old('registration_start_date') }}" placeholder="Enter registration start date" required>
                                         <div class="help-block with-errors"></div>
                                         @error('registration_start_date')
                                         <span class="invalid-feedback" role="alert">
@@ -214,7 +190,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="registration_expiration_date">{{ __('Registration Expiration Date')}}<span class="text-red">*</span></label>
-                                        <input id="registration_expiration_date" type="date" class="form-control @error('registration_expiration_date') is-invalid @enderror" name="registration_expiration_date" value="{{ $league->registration_expiration_date }}" placeholder="Enter registration_ expiration date" required>
+                                        <input id="registration_expiration_date" type="date" class="form-control @error('registration_expiration_date') is-invalid @enderror" name="registration_expiration_date" value="{{ old('registration_expiration_date') }}" placeholder="Enter registration_ expiration date" required>
                                         <div class="help-block with-errors"></div>
                                         @error('registration_expiration_date')
                                         <span class="invalid-feedback" role="alert">
@@ -227,7 +203,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="race_date">{{ __('Race Date')}}<span class="text-red">*</span></label>
-                                        <input id="race_date" type="date" class="form-control @error('race_date') is-invalid @enderror" name="race_date" value="{{ $league->race_date }}" placeholder="Enter race date" required>
+                                        <input id="race_date" type="date" class="form-control @error('race_date') is-invalid @enderror" name="race_date" value="{{ old('race_date') }}" placeholder="Enter race date" required>
                                         <div class="help-block with-errors"></div>
                                         @error('race_date')
                                         <span class="invalid-feedback" role="alert">
@@ -240,9 +216,9 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="athletes">{{ __('Athletes')}}<span class="text-red">*</span></label>
-                                        <select multiple id="athletes" class="form-control select2 @error('athletes') is-invalid @enderror" name="athletes[]">
+                                        <select multiple id="athletes" class="form-control select2 @error('athletes') is-invalid @enderror" name="athletes[]" required>
                                             @forelse($athletes as $athlete)
-                                                <option {{ in_array($athlete->id, $leagueAthletes) ? 'selected' : '' }} value="{{ $athlete->id }}">{{ $athlete->name }} ({{ $athlete->email }})</option>
+                                                <option value="{{ $athlete->id }}">{{ $athlete->name }} ({{ $athlete->email }})</option>
                                             @empty
                                                 <option>No Athlete Found</option>
                                             @endforelse
@@ -262,7 +238,7 @@
                                         <label for="allow_join">{{ __('Allow Join?')}}<span class="text-red">*</span></label>
                                         <input type="hidden" name="allow_join" value="0">
                                         <br>
-                                        <input {{ $league->allow_join == 1 ? 'checked' : '' }} value="1" id="allow_join" class="form-control js-single @error('allow_join') is-invalid @enderror" name="allow_join" type="checkbox" autofocus />
+                                        <input value="1" id="allow_join" class="form-control js-single @error('allow_join') is-invalid @enderror" name="allow_join" type="checkbox" {{ old('allow_join') == 1 ? 'checked' : '' }} autofocus />
                                         <div class="help-block with-errors"></div>
                                         @error('allow_join')
                                         <span class="invalid-feedback" role="alert">

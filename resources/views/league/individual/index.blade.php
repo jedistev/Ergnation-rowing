@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'My Leagues')
+@section('title', 'Leagues')
 @section('content')
     <!-- push external head elements to head -->
     @push('head')
@@ -48,12 +48,17 @@
                                 <th>{{ __('Name')}}</th>
                                 <th>{{ __('Type')}}</th>
                                 <th>{{ __('Machine Type')}}</th>
-                                <th>{{ __('Business')}}</th>
+                                <th>{{ __('Allow Join')}}</th>
+{{--                                <th>{{ __('Description')}}</th>--}}
+                                <th>{{ __('Distance')}}</th>
                                 <th>{{ __('Category')}}</th>
+{{--                                <th>{{ __('Gender')}}</th>--}}
+                                <th>{{ __('Age Group')}}</th>
+                                <th>{{ __('Athletes')}}</th>
                                 <th>{{ __('Start Date')}}</th>
                                 <th>{{ __('End Date')}}</th>
                                 <th>{{ __('Race Date')}}</th>
-                                <th>{{ __('Actions')}}</th>
+                                <th>{{ __('Leaderboard')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -63,37 +68,22 @@
                                     <td>{{ $league->name }}</td>
                                     <td>{{ $league->type }}</td>
                                     <td>{{ $league->machine_type }}</td>
-                                    <td>{{ $league->business }}</td>
+                                    <td>{{ $league->allow_join ? 'Yes' : 'No' }}</td>
+{{--                                    <td>{{ $league->business }}</td>--}}
+                                    <td>{{ $league->distance }}M</td>
                                     <td>{{ $league->category }}</td>
+{{--                                    <td>{{ $league->gender }}</td>--}}
+                                    <td>{{ $league->age }}</td>
+                                    @if($league->athletes_count > 0)
+                                        <td><a class="btn btn-link" href="{{ route('league.athletes', $league) }}">{{ $league->athletes_count }}</a></td>
+                                    @else
+                                        <td><a class="btn btn-link" href="#">0</a></td>
+                                    @endif
                                     <td>{{ $league->registration_start_date }}</td>
                                     <td>{{ $league->registration_expiration_date }}</td>
                                     <td>{{ $league->race_date }}</td>
-                                    <td>
-                                        <?php 
-                                        $userid = Auth::user()->id;
-                                        $upload_count = DB::table('athlete_results')->where('league_id',$league->id)->where('athlete_id',$userid)->count();
-                                        $nowdate = date('Y-m-d');
-                                        ?>
-                                        <div class="table-actions">
-                                            <a href="{{ route('athlete.league.leave', $league) }}"><i
-                                                    data-toggle="tooltip" data-title="Leave League"
-                                                    class="ik ik-log-out"></i></a>
-
-                                            <a href="{{ route('athlete.results', $league) }}">
-                                                <i
-                                                        data-toggle="tooltip" data-title="View My Result"
-                                                        class="ik ik-eye"></i>
-                                            </a>
-                                            @if($nowdate == $league->race_date)
-                                            <a href="{{ route('athlete.results.create', $league) }}">
-                                                <i
-                                                    data-toggle="tooltip" data-title="Upload My Result"
-                                                    class="ik ik-upload"></i>
-                                            </a>
-                                            @endif
-                                            
-                                        </div>
-                                    </td>
+{{--                                    <td>{{ $league->user->name }}</td>--}}                                  
+                                    <td><a href="{!! route('league.leaderboard',$league->id)!!}" class=" btn-info btn-sm">Preview</a></td> 
                                 </tr>
                             @empty
                                 <tr>

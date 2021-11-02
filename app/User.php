@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
 use Mpociot\Teamwork\Traits\UserHasTeams;
+use Storage;
 
 
 class User extends Authenticatable
@@ -22,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'firstname','surname','email', 'password',
+        'name', 'firstname','surname','email', 'password', 'avatar'
     ];
 
     /**
@@ -52,6 +53,13 @@ class User extends Authenticatable
 
         return $roles;
     }
+
+    // get avatar url attribute
+    public function getAvatarUrlAttribute()
+    {
+        return Storage::disk('s3')->url($this->avatar);
+    }
+
 
     // leagues for users who created
     public function leagues()

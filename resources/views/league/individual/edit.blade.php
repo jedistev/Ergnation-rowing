@@ -44,7 +44,7 @@
                         <h3>{{ __('Edit League')}}</h3>
                     </div>
                     <div class="card-body">
-                        <form enctype="multipart/form-data" class="forms-sample" method="POST" action="{{ route('league.update', $league) }}" >
+                        <form enctype="multipart/form-data" class="forms-sample" method="POST" action="{{ route('myleagues.update', $league) }}" >
                             @csrf
                             @method('PUT')
 

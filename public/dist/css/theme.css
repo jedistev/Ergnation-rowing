@@ -1332,7 +1332,7 @@ a:hover, a:focus, a:active { outline: 0; text-decoration: none; color: #212121; 
 .table tbody td { vertical-align: middle; }
 .table tbody td .table-user-thumb { width: 30px; height: 30px; border-radius: 50%; }
 .table tbody td .table-actions { text-align: right; }
-.table tbody td .table-actions a { color: #bcc1c6; display: inline-block; margin-left: 8px; font-size: 16px; }
+.table tbody td .table-actions a { color: #bcc1c6; display: inline-block; margin-left: 8px; font-size: 12px; }
 
 .badge { padding: 6px 10px; font-size: 12px; font-weight: 600; }
 .badge.badge-top-left { top: 7px; right: 10px; }
@@ -2108,7 +2108,7 @@ p { font-size: 14px; }
 @media only screen and (max-width: 1023px) { .wrapper .page-wrap .app-sidebar .sidebar-header .nav-toggle { display: none; } }
 .wrapper .page-wrap .app-sidebar .sidebar-content { position: relative; height: -webkit-calc(100vh - 60px); height: -moz-calc(100vh - 60px); height: calc(100vh - 60px); overflow: auto; z-index: 4; }
 .wrapper .page-wrap .app-sidebar .sidebar-content .nav-container .navigation-main .nav-item { position: relative; }
-.wrapper .page-wrap .app-sidebar .sidebar-content .nav-container .navigation-main .nav-item a { 
+.wrapper .page-wrap .app-sidebar .sidebar-content .nav-container .navigation-main .nav-item a {
 	display: block;
     overflow: hidden;
     margin: 0;
@@ -2134,7 +2134,7 @@ p { font-size: 14px; }
 .wrapper .page-wrap .app-sidebar .sidebar-content .nav-container .navigation-main .nav-item.open a::before { -moz-transform: rotate(90deg); -o-transform: rotate(90deg); -ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); transform: rotate(90deg); }
 .wrapper .page-wrap .app-sidebar .sidebar-content .nav-container .navigation-main .nav-item.open::after { background: #576a3d; border-radius: 10px; color: #fff; content: " "; height: 25px; left: 0; position: absolute; top: 8px; width: 3px; }
 .wrapper .page-wrap .app-sidebar .sidebar-content .nav-container .navigation-main .nav-item.active::after { background: #576a3d; border-radius: 10px; color: #fff; content: " "; height: 25px; left: 0; top: 8px; position: absolute; width: 3px; }
-.wrapper .page-wrap .app-sidebar .sidebar-content .nav-container .navigation-main .nav-lavel { 
+.wrapper .page-wrap .app-sidebar .sidebar-content .nav-container .navigation-main .nav-lavel {
     font-size: 12px;
     font-weight: 500;
     opacity: 0.9;
