@@ -99,7 +99,7 @@
 
                              @if(auth()->user()->hasRole(['Individuals']))
                                 <a href="{{ route('leagues.myleagues') }}" class="menu-item {{ request()->is('all/leagues') ? 'active' : '' }}"> {{ __('My Leagues')}}</a>
-                            
+
                                 <a href="{{ route('leagues.open') }}" class="menu-item {{ request()->is('open/leagues') ? 'active' : '' }}"> {{ __('Open Leagues')}}</a>
 
                                 <a href="{{ route('leagues.myregistered') }}" class="menu-item {{ request()->is('my-registered-leagues') ? 'active' : '' }}"> {{ __('My Registered Leagues')}}</a>
@@ -121,19 +121,10 @@
                 @endif
 
 
-               
+
 
                 @can('manage_permission')
-                    <div class="nav-lavel">{{ __('Documentation')}} </div>
-                    <div class="nav-item {{ ($segment1 == 'rest-api') ? 'active' : '' }}">
-                        <a href="{{url('rest-api')}}"><i class="ik ik-cloud"></i><span>{{ __('REST API')}}</span> </a>
-                    </div>
-                    <div class="nav-item {{ ($segment1 == 'permission-example') ? 'active' : '' }}">
-                        <a href="{{url('permission-example')}}"><i class="ik ik-unlock"></i><span>{{ __('Laravel Permission')}}</span> </a>
-                    </div>
-                    <div class="nav-item {{ ($segment1 == 'table-datatable-edit') ? 'active' : '' }}">
-                        <a href="{{url('table-datatable-edit')}}"><i class="ik ik-layout"></i><span>{{ __('Editable Datatable')}}</span>  </a>
-                    </div>
+
             @endcan
         </div>
     </div>
