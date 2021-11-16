@@ -6,7 +6,12 @@
         <link rel="stylesheet" href="{{ asset('plugins/mohithg-switchery/dist/switchery.min.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
     @endpush
-
+<style type="text/css">
+    .select2.select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #8e8e8e;
+            height: 100px;
+        }
+</style>
 
     <div class="container-fluid">
         <div class="page-header">

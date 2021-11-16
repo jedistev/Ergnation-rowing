@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
 use App\User;
+use App\Team;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DataTables,Auth;
@@ -39,6 +40,20 @@ class UserController extends Controller
         $data  = User::get();
 
         return Datatables::of($data)
+
+                ->addColumn('current_team_id', function($data){
+                    $teamid = $data->current_team_id;
+                    if($teamid)
+                    {
+                        $team  = Team::find($teamid);
+                        return $team->name;
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                })
                 ->addColumn('roles', function($data){
                     $roles = $data->getRoleNames()->toArray();
                     $badge = '';
@@ -112,6 +127,7 @@ class UserController extends Controller
                         'firstname'  => $request->firstname,
                         'email'    => $request->email,
                         'password' => Hash::make($request->password),
+                        'avatar' => 'default.jpg',
                     ]);
 
             // assign new role to the user

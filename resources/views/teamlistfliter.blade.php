@@ -33,7 +33,11 @@
                 </div>
             </div>
         </div>
-
+        <?php
+        /*echo "<pre>";
+        print_r($teamlistfliter);
+        echo "</pre>";*/
+        ?>
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
@@ -42,8 +46,11 @@
                         <div class="Team-filter">
                         <select id="TeamFilter" class="form-control">
                                 <option value="">Show All</option>
-                                @foreach($teamlistfliter as $row)
-                                    <option>{{ $row->team }}</option>
+                                @foreach($teamnames as $row)
+                                <?php 
+                                    $teamdata  = App\Team::find($row->team);
+                                ?>
+                                    <option>{{ @$teamdata->name }}</option>
                                 @endforeach
                             </select>
                         </div>
